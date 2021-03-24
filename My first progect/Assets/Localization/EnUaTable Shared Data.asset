@@ -1,0 +1,144 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: EnUaTable Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: EnUaTable
+  m_TableCollectionNameGuidString: 32716f1008ab4e04fbdc3e03caced29b
+  m_Entries:
+  - m_Id: 69614317568
+    m_Key: UNDERWATER_SURVIVAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1253855080448
+    m_Key: START
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1372142841856
+    m_Key: OPTIONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1411326029824
+    m_Key: EXIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1620449832960
+    m_Key: BACK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1729497542656
+    m_Key: RESUME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 430149960347648
+    m_Key: MUSIC_VOLUME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 430333880578048
+    m_Key: SFX_VOLUME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 430452461940736
+    m_Key: FONT_SIZE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 430559848706048
+    m_Key: FONT_COLOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 430941782028288
+    m_Key: LANGUAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 431047310716928
+    m_Key: STEREO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 431102264487936
+    m_Key: DARK_MODE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 431193784201216
+    m_Key: FULLSCREEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 431665391742976
+    m_Key: RESOLUTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 440559325294592
+    m_Key: ENGLISH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 440666741420032
+    m_Key: UKRAINIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 440782248357888
+    m_Key: WHITE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 440845079031808
+    m_Key: BLACK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 440887483445248
+    m_Key: YELLOW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 440946644103168
+    m_Key: RED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 440975941316608
+    m_Key: GREEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 441011500625920
+    m_Key: ORANGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 441102785458176
+    m_Key: VIOLET
+    m_Metadata:
+      m_Items: []
+  - m_Id: 441155591745536
+    m_Key: PINK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 441190572240896
+    m_Key: BLUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 441228945928192
+    m_Key: DARK_BLUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1696609252814848
+    m_Key: GAME_OVER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1696773292044288
+    m_Key: SCORE
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables,
+        asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1615933422600
