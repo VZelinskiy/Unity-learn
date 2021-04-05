@@ -1,30 +1,51 @@
-using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class QueueBallController : MonoBehaviour
 {
-    [SerializeField] GameObject[] waypointsObjects;
+    [SerializeField] List<Transform> ballsInQueue;
+    [SerializeField] float ballDiameter = 1;
 
-    private Vector3[] waypoints;
+    private List<Vector3> positions;
+    private float distance;
+    private Vector3 direction;
 
+    
     // Start is called before the first frame update
     void Start()
     {
-        waypoints = new Vector3[3];
+        positions = new List<Vector3>();
 
-        for (int i = 0; i < waypointsObjects.Length; i++)
+        for (int i = 0; i < ballsInQueue.Count; i++)
         {
-            waypoints[i] = waypointsObjects[i].transform.position;
+            positions.Add(ballsInQueue[i].position);
         }
-
-        gameObject.transform.DOPath(waypoints, 5, PathType.Linear, PathMode.Full3D, 10, Color.red);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Move();
+    }
+
+    private void Move()
+    {
+        distance = (ballsInQueue[0].position - positions[0]).magnitude;
+
+        if (distance > ballDiameter)
+        {
+            direction = (ballsInQueue[0].position - positions[0]).normalized;
+
+            positions.Insert(0, positions[0] + direction * ballDiameter);
+            positions.RemoveAt(positions.Count - 1);
+            
+            distance -= ballDiameter;
+        }
+
+        for (int i = 1; i < ballsInQueue.Count; i++)
+        {
+            ballsInQueue[i].position = Vector3.Lerp(positions[i], positions[i - 1], distance / ballDiameter);
+        }
     }
 }
