@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 6381192285678579299}
   - component: {fileID: 8095726901186332756}
   m_Layer: 0
-  m_Name: RedBall
-  m_TagString: RedBall
+  m_Name: GreenBall
+  m_TagString: GreenBall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 30af9225e56b4a640ba76d3c9ea39496, type: 2}
+  - {fileID: 2100000, guid: 4cfe1d8bdbbc43941a7a79860d66bc0f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

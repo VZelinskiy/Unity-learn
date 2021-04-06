@@ -9,7 +9,7 @@ public class PathController : MonoBehaviour
 
     private Vector3[] waypoints;
 
-    private const int PATH_TIME = 30;
+    private const int PATH_TIME = 60;
 
     // Start is called before the first frame update
     void Start()
