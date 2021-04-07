@@ -9,7 +9,7 @@ public class QueueController : MonoBehaviour
     [SerializeField] float ballDiameter = 1;
 
     private List<Vector3> positions;
-    private List<BallController> ballsToDestroy;
+    private List<int> ballsIndexToDestroy;
     private float distance;
     private Vector3 direction;
 
@@ -18,7 +18,7 @@ public class QueueController : MonoBehaviour
     void Start()
     {
         positions = new List<Vector3>();
-        ballsToDestroy = new List<BallController>();
+        ballsIndexToDestroy = new List<int>();
 
         for (int i = 0; i < ballsInQueue.Count; i++)
         {
@@ -63,7 +63,7 @@ public class QueueController : MonoBehaviour
         ResetBallsIdFromCur(ballInQueue.id);
         launchedBall.CollisionWithQueue += AddBallToQueue;
 
-        //DestroyThreeOrMoreSameBalls(launchedBall);
+        DestroyThreeOrMoreSameBalls(launchedBall);
     }
 
     private void DestroyThreeOrMoreSameBalls(BallController launchedBall)
@@ -72,7 +72,7 @@ public class QueueController : MonoBehaviour
         {
             if (ballsInQueue[i].CompareTag(launchedBall.tag))
             {
-                ballsToDestroy.Add(ballsInQueue[i]);
+                ballsIndexToDestroy.Add(i);
             }
             else
             {
@@ -84,7 +84,7 @@ public class QueueController : MonoBehaviour
         {
             if (ballsInQueue[i].CompareTag(launchedBall.tag))
             {
-                ballsToDestroy.Add(ballsInQueue[i]);
+                ballsIndexToDestroy.Add(i);
             }
             else
             {
@@ -92,15 +92,22 @@ public class QueueController : MonoBehaviour
             }
         }
 
-        if (ballsToDestroy.Count > 2)
+        if (ballsIndexToDestroy.Count > 2)
         {
-            for (int i = 0; i < ballsToDestroy.Count; i++)
+            ballsIndexToDestroy.Sort();
+
+            //Debug.Log(ballsIndexToDestroy[0] + " " + ballsIndexToDestroy[1] + " " + ballsIndexToDestroy[2]);
+
+            for (int i = ballsIndexToDestroy[0]; i <= ballsIndexToDestroy[ballsIndexToDestroy.Count - 1]; i++)
             {
-                Destroy(ballsToDestroy[i]);
+                Destroy(ballsInQueue[i].gameObject);
             }
+
+            ballsInQueue.RemoveRange(ballsIndexToDestroy[0], ballsIndexToDestroy.Count);
+
         }
 
-        ballsToDestroy.Clear();
+        ballsIndexToDestroy.Clear();
     }
 
     private void ResetBallsIdFromCur(int id)

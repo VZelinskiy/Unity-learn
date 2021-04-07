@@ -32,11 +32,18 @@ public class BallController : MonoBehaviour
     {
         BallController otherObj = other.gameObject.GetComponent<BallController>();
 
-        if (otherObj.isInQueue == false)
+        if (otherObj != null)
         {
-            Debug.Log("COLLISION! " + gameObject.name + " " + other.name);
-            CollisionWithQueue?.Invoke(otherObj, this);
-            otherObj.isInQueue = true;
+            if (otherObj.isInQueue == false)
+            {
+                Debug.Log("COLLISION! " + gameObject.name + " " + other.name);
+                CollisionWithQueue?.Invoke(otherObj, this);
+                otherObj.isInQueue = true;
+            }
+        }
+        else
+        {
+            Debug.Log("obj was destroyed");
         }
     }
 }
