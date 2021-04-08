@@ -1,11 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
-    public event Action<BallController, BallController> CollisionWithQueue;
+    //public event Action<BallController, BallController> CollisionWithLaunchedBall;
+    public event Action LaunchedBallDestroyed;
 
     public Vector3 ballDirection;
     public int id;
@@ -13,6 +12,8 @@ public class BallController : MonoBehaviour
     [SerializeField] float launchSpeed;
 
     [SerializeField] bool isInQueue = false;
+
+    private float outOfBoundsDistance = 20;
 
     // Update is called once per frame
     void Update()
@@ -26,6 +27,26 @@ public class BallController : MonoBehaviour
     private void MoveBall()
     {
         transform.Translate(ballDirection * Time.deltaTime * launchSpeed);
+
+        if (IsOutOfBounds())
+        {
+            Destroy(gameObject);
+            LaunchedBallDestroyed?.Invoke();
+        }
+    }
+
+    private bool IsOutOfBounds()
+    {
+        if (transform.position.x > outOfBoundsDistance)
+            return true;
+        if (transform.position.x < -outOfBoundsDistance)
+            return true;
+        if (transform.position.z > outOfBoundsDistance)
+            return true;
+        if (transform.position.z < -outOfBoundsDistance)
+            return true;
+
+        return false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -36,10 +57,10 @@ public class BallController : MonoBehaviour
         {
             if (otherObj.isInQueue == false)
             {
-                Debug.Log("COLLISION! " + gameObject.name + " " + other.name);
-                CollisionWithQueue?.Invoke(otherObj, this);
+                //CollisionWithLaunchedBall?.Invoke(otherObj, this);
+                EventBroker.CallLaunchedBallCollsionWithQueue(otherObj, this);
                 otherObj.isInQueue = true;
-            }
+            }  
         }
         else
         {

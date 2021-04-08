@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +16,8 @@ public class QueueController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        EventBroker.LaunchedBallCollsionWithQueue += AddBallToQueue;
+
         positions = new List<Vector3>();
         ballsIndexToDestroy = new List<int>();
 
@@ -24,7 +25,7 @@ public class QueueController : MonoBehaviour
         {
             positions.Add(ballsInQueue[i].transform.position);
             ballsInQueue[i].id = i;
-            ballsInQueue[i].CollisionWithQueue += AddBallToQueue;
+            //ballsInQueue[i].CollisionWithLaunchedBall += AddBallToQueue;
         }
     }
 
@@ -50,25 +51,42 @@ public class QueueController : MonoBehaviour
 
         for (int i = 1; i < ballsInQueue.Count; i++)
         {
-            ballsInQueue[i].transform.position = Vector3.Lerp(positions[i], positions[i - 1], distance / ballDiameter);
+            //ballsInQueue[i].transform.position = Vector3.Lerp(positions[i], positions[i - 1], distance / ballDiameter);
+            ballsInQueue[i].transform.position = Vector3.Lerp(positions[ballsInQueue[i].id], positions[ballsInQueue[i].id - 1], distance / ballDiameter);
         }
     }
 
     private void AddBallToQueue(BallController launchedBall, BallController ballInQueue)
     {
-        Debug.Log("Adding ball!");
         positions.Insert(0, positions[0] + direction * ballDiameter);
-        ballsInQueue.Insert(ballInQueue.id, launchedBall);
+        int ballInQueueListId = GetQueueBallsListIdByBallId(ballInQueue.id);
+        ballsInQueue.Insert(ballInQueueListId, launchedBall);
         launchedBall.transform.SetParent(transform);
-        ResetBallsIdFromCur(ballInQueue.id);
-        launchedBall.CollisionWithQueue += AddBallToQueue;
+        ResetBallsIdAfterAddingFromCur(ballInQueueListId - 1);
+        //launchedBall.CollisionWithLaunchedBall += AddBallToQueue;
 
         DestroyThreeOrMoreSameBalls(launchedBall);
     }
 
+    private int GetQueueBallsListIdByBallId(int id)
+    {
+        for (int i = 0; i < ballsInQueue.Count; i++)
+        {
+            if (ballsInQueue[i].id == id)
+            {
+                return i;
+            }
+        }
+
+        Debug.Log("BAD error");
+        return 0;
+    }
+
     private void DestroyThreeOrMoreSameBalls(BallController launchedBall)
     {
-        for (int i = launchedBall.id; i < ballsInQueue.Count; i++)
+        int launchedBallListId = GetQueueBallsListIdByBallId(launchedBall.id);
+
+        for (int i = launchedBallListId; i < ballsInQueue.Count; i++)
         {
             if (ballsInQueue[i].CompareTag(launchedBall.tag))
             {
@@ -80,7 +98,7 @@ public class QueueController : MonoBehaviour
             }
         }
 
-        for (int i = launchedBall.id - 1; i >= 0; i--)
+        for (int i = launchedBallListId - 1; i >= 0; i--)
         {
             if (ballsInQueue[i].CompareTag(launchedBall.tag))
             {
@@ -96,25 +114,46 @@ public class QueueController : MonoBehaviour
         {
             ballsIndexToDestroy.Sort();
 
-            //Debug.Log(ballsIndexToDestroy[0] + " " + ballsIndexToDestroy[1] + " " + ballsIndexToDestroy[2]);
-
             for (int i = ballsIndexToDestroy[0]; i <= ballsIndexToDestroy[ballsIndexToDestroy.Count - 1]; i++)
             {
                 Destroy(ballsInQueue[i].gameObject);
             }
 
             ballsInQueue.RemoveRange(ballsIndexToDestroy[0], ballsIndexToDestroy.Count);
-
+            //ResetBallsIdFromCur(ballsIndexToDestroy[0]);
+            ResetBallsIdAfterDeletingFromCur(ballsIndexToDestroy[0]);
         }
 
         ballsIndexToDestroy.Clear();
     }
 
-    private void ResetBallsIdFromCur(int id)
+    private void ResetBallsIdAfterDeletingFromCur(int id)
     {
+        int newId = ballsInQueue[id].id;
+
+        for (int i = id; i >= 1; i--)
+        {
+            ballsInQueue[i].id = newId;
+            newId--;
+        }
+    }
+
+    private void ResetBallsIdAfterAddingFromCur(int id)
+    {
+        int newId = ballsInQueue[id].id;
+
+        if (newId == 0)
+        {
+            newId = ballsInQueue[2].id;
+        }
+
         for (int i = id; i < ballsInQueue.Count; i++)
         {
-            ballsInQueue[i].id = i;
+            if (i != 0)
+            {
+                ballsInQueue[i].id = newId;
+                newId++;
+            }
         }
     }
 }

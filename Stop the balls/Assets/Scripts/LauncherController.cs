@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LauncherController : MonoBehaviour
@@ -10,6 +8,7 @@ public class LauncherController : MonoBehaviour
 
     //private Vector3 launcherRotation;
     private float horizontalInput;
+    private bool isLaunchedBallAvailable = true;
 
     private readonly string launchButtonName = "Jump";
     private readonly string horizontalAxisName = "Horizontal";
@@ -17,7 +16,12 @@ public class LauncherController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        EventBroker.LaunchedBallCollsionWithQueue += LaunchedBallCollsionWithQueueHandler;
+    }
+
+    private void LaunchedBallCollsionWithQueueHandler(BallController arg1, BallController arg2)
+    {
+        isLaunchedBallAvailable = true;
     }
 
     // Update is called once per frame
@@ -25,7 +29,10 @@ public class LauncherController : MonoBehaviour
     {
         if (Input.GetButton(launchButtonName))
         {
-            LaunchBall();
+            if (isLaunchedBallAvailable)
+            {
+                LaunchBall();
+            }
         }
 
         RotateLauncher();
@@ -35,6 +42,14 @@ public class LauncherController : MonoBehaviour
     {
         BallController ball = Instantiate(ballPrefab, ballPlace.transform.position, Quaternion.identity);
         ball.ballDirection = gameObject.transform.up;
+        isLaunchedBallAvailable = false;
+
+        ball.LaunchedBallDestroyed += MakeLaunchedBallAvailable; 
+    }
+
+    private void MakeLaunchedBallAvailable()
+    {
+        isLaunchedBallAvailable = true;
     }
 
     private void RotateLauncher()
