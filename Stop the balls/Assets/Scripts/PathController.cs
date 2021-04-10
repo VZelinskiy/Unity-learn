@@ -9,7 +9,7 @@ public class PathController : MonoBehaviour
 
     private Vector3[] waypoints;
 
-    private const int PATH_TIME = 60;
+    private const int PATH_TIME = 30;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +21,6 @@ public class PathController : MonoBehaviour
             waypoints[i] = waypointsObjects[i].transform.position;
         }
 
-        gameObject.transform.DOPath(waypoints, PATH_TIME, PathType.CatmullRom, PathMode.Full3D, 10, Color.red);
+        gameObject.transform.DOPath(waypoints, PATH_TIME, PathType.Linear, PathMode.Full3D, 10, Color.red).SetEase(Ease.Linear);
     }
 }

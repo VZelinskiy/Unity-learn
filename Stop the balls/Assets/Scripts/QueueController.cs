@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -51,8 +52,9 @@ public class QueueController : MonoBehaviour
 
         for (int i = 1; i < ballsInQueue.Count; i++)
         {
-            //ballsInQueue[i].transform.position = Vector3.Lerp(positions[i], positions[i - 1], distance / ballDiameter);
-            ballsInQueue[i].transform.position = Vector3.Lerp(positions[ballsInQueue[i].id], positions[ballsInQueue[i].id - 1], distance / ballDiameter);
+            //TO DELETE ballsInQueue[i].transform.position = Vector3.Lerp(positions[i], positions[i - 1], distance / ballDiameter);
+            //ballsInQueue[i].transform.position = Vector3.Lerp(positions[ballsInQueue[i].id], positions[ballsInQueue[i].id - 1], distance / ballDiameter);
+            ballsInQueue[i].transform.DOMove(positions[ballsInQueue[i].id - 1], 1f);
         }
     }
 
