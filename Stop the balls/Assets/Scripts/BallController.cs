@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using DG.Tweening;
 
 public class BallController : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class BallController : MonoBehaviour
 
     [SerializeField] bool isInQueue = false;
 
-    private float outOfBoundsDistance = 20;
+    private readonly float outOfBoundsDistance = 20;
 
     // Update is called once per frame
     void Update()
@@ -49,22 +50,30 @@ public class BallController : MonoBehaviour
         return false;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        BallController otherObj = other.gameObject.GetComponent<BallController>();
+        BallController otherObj = collision.gameObject.GetComponent<BallController>();
 
         if (otherObj != null)
         {
             if (otherObj.isInQueue == false)
             {
-                //CollisionWithLaunchedBall?.Invoke(otherObj, this);
-                EventBroker.CallLaunchedBallCollsionWithQueue(otherObj, this);
+                Vector3 collisionNormal = collision.GetContact(0).normal;
+                bool isCollisionFront = false;
+                float angle = Vector3.Angle(transform.forward, collisionNormal);
+                if (angle > 90)
+                {
+                    isCollisionFront = true;
+                }
+
+                EventBroker.CallLaunchedBallCollsionWithQueue(otherObj, this, isCollisionFront);
                 otherObj.isInQueue = true;
-            }  
+            }
         }
-        else
-        {
-            Debug.Log("obj was destroyed");
-        }
+    }
+
+    private void OnDestroy()
+    {
+        transform.DOKill();
     }
 }

@@ -1,10 +1,12 @@
 using DG.Tweening;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class QueueController : MonoBehaviour
 {
+    private const float tweenDuration = 1f;
     [SerializeField] List<BallController> ballsInQueue;
     [SerializeField] float ballDiameter = 1;
 
@@ -47,27 +49,35 @@ public class QueueController : MonoBehaviour
             positions.Insert(0, positions[0] + direction * ballDiameter);
             positions.RemoveAt(positions.Count - 1);
             
-            distance -= ballDiameter;
+            //distance -= ballDiameter;
         }
 
         for (int i = 1; i < ballsInQueue.Count; i++)
         {
-            //TO DELETE ballsInQueue[i].transform.position = Vector3.Lerp(positions[i], positions[i - 1], distance / ballDiameter);
             //ballsInQueue[i].transform.position = Vector3.Lerp(positions[ballsInQueue[i].id], positions[ballsInQueue[i].id - 1], distance / ballDiameter);
-            ballsInQueue[i].transform.DOMove(positions[ballsInQueue[i].id - 1], 1f);
+            ballsInQueue[i].transform.DOMove(positions[ballsInQueue[i].id - 1], tweenDuration);
+            ballsInQueue[i].transform.DOLookAt(positions[ballsInQueue[i].id - 1], tweenDuration);
         }
     }
 
-    private void AddBallToQueue(BallController launchedBall, BallController ballInQueue)
+    private void AddBallToQueue(BallController launchedBall, BallController ballInQueue, bool isCollisionFront)
     {
         positions.Insert(0, positions[0] + direction * ballDiameter);
-        int ballInQueueListId = GetQueueBallsListIdByBallId(ballInQueue.id);
+        int ballInQueueListId;
+
+        if (isCollisionFront)
+        {
+            ballInQueueListId = GetQueueBallsListIdByBallId(ballInQueue.id);
+        }
+        else
+        {
+            ballInQueueListId = GetQueueBallsListIdByBallId(ballInQueue.id + 1);
+        }
+        
         ballsInQueue.Insert(ballInQueueListId, launchedBall);
         launchedBall.transform.SetParent(transform);
         ResetBallsIdAfterAddingFromCur(ballInQueueListId - 1);
-        //launchedBall.CollisionWithLaunchedBall += AddBallToQueue;
-
-        DestroyThreeOrMoreSameBalls(launchedBall);
+        StartCoroutine(DestroyThreeOrMoreSameBalls(launchedBall));
     }
 
     private int GetQueueBallsListIdByBallId(int id)
@@ -84,8 +94,10 @@ public class QueueController : MonoBehaviour
         return 0;
     }
 
-    private void DestroyThreeOrMoreSameBalls(BallController launchedBall)
+    private IEnumerator DestroyThreeOrMoreSameBalls(BallController launchedBall)
     {
+        yield return new WaitForSeconds(tweenDuration / 2);
+
         int launchedBallListId = GetQueueBallsListIdByBallId(launchedBall.id);
 
         for (int i = launchedBallListId; i < ballsInQueue.Count; i++)

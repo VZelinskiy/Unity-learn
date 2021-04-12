@@ -19,7 +19,7 @@ public class LauncherController : MonoBehaviour
         EventBroker.LaunchedBallCollsionWithQueue += LaunchedBallCollsionWithQueueHandler;
     }
 
-    private void LaunchedBallCollsionWithQueueHandler(BallController arg1, BallController arg2)
+    private void LaunchedBallCollsionWithQueueHandler(BallController arg1, BallController arg2, bool arg3)
     {
         isLaunchedBallAvailable = true;
     }
