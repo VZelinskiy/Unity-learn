@@ -1,5 +1,4 @@
 using DG.Tweening;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +6,8 @@ using UnityEngine;
 public class QueueController : MonoBehaviour
 {
     private const float tweenDuration = 1f;
+    private const int sequencesCapacity = 50;
+    private const int tweenersCapacity = 1250;
     [SerializeField] List<BallController> ballsInQueue;
     [SerializeField] float ballDiameter = 1;
 
@@ -14,12 +15,15 @@ public class QueueController : MonoBehaviour
     private List<int> ballsIndexToDestroy;
     private float distance;
     private Vector3 direction;
-
+    private bool isGameOver = false;
     
     // Start is called before the first frame update
     void Start()
     {
+        DOTween.SetTweensCapacity(tweenersCapacity, sequencesCapacity);
+
         EventBroker.LaunchedBallCollsionWithQueue += AddBallToQueue;
+        EventBroker.GameOver += GameOverHandler;
 
         positions = new List<Vector3>();
         ballsIndexToDestroy = new List<int>();
@@ -28,14 +32,21 @@ public class QueueController : MonoBehaviour
         {
             positions.Add(ballsInQueue[i].transform.position);
             ballsInQueue[i].id = i;
-            //ballsInQueue[i].CollisionWithLaunchedBall += AddBallToQueue;
         }
+    }
+
+    private void GameOverHandler()
+    {
+        isGameOver = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Move();
+        if (!isGameOver)
+        {
+            Move();
+        }
     }
 
     private void Move()
@@ -48,13 +59,10 @@ public class QueueController : MonoBehaviour
 
             positions.Insert(0, positions[0] + direction * ballDiameter);
             positions.RemoveAt(positions.Count - 1);
-            
-            //distance -= ballDiameter;
         }
 
         for (int i = 1; i < ballsInQueue.Count; i++)
         {
-            //ballsInQueue[i].transform.position = Vector3.Lerp(positions[ballsInQueue[i].id], positions[ballsInQueue[i].id - 1], distance / ballDiameter);
             ballsInQueue[i].transform.DOMove(positions[ballsInQueue[i].id - 1], tweenDuration);
             ballsInQueue[i].transform.DOLookAt(positions[ballsInQueue[i].id - 1], tweenDuration);
         }
@@ -90,8 +98,7 @@ public class QueueController : MonoBehaviour
             }
         }
 
-        Debug.Log("BAD error");
-        return 0;
+        return ballsInQueue.Count;
     }
 
     private IEnumerator DestroyThreeOrMoreSameBalls(BallController launchedBall)
@@ -134,7 +141,6 @@ public class QueueController : MonoBehaviour
             }
 
             ballsInQueue.RemoveRange(ballsIndexToDestroy[0], ballsIndexToDestroy.Count);
-            //ResetBallsIdFromCur(ballsIndexToDestroy[0]);
             ResetBallsIdAfterDeletingFromCur(ballsIndexToDestroy[0]);
         }
 

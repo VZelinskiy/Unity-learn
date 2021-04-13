@@ -7,6 +7,7 @@ public class BallController : MonoBehaviour
     //public event Action<BallController, BallController> CollisionWithLaunchedBall;
     public event Action LaunchedBallDestroyed;
 
+    private const string deathColliderTag = "DeathCollider";
     public Vector3 ballDirection;
     public int id;
 
@@ -52,6 +53,14 @@ public class BallController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.CompareTag(deathColliderTag) && isInQueue)
+        {
+            Debug.Log("GAME OVER!");
+            EventBroker.CallGameOver();
+            Destroy(collision.gameObject);
+            Time.timeScale = 0;
+        }
+
         BallController otherObj = collision.gameObject.GetComponent<BallController>();
 
         if (otherObj != null)
