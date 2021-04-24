@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class QueueController : MonoBehaviour
 {
-    private const float tweenDuration = 1f;
-    private const int sequencesCapacity = 50;
-    private const int tweenersCapacity = 1250;
     [SerializeField] List<BallController> ballsInQueue;
     [SerializeField] float ballDiameter = 1;
 
@@ -16,7 +13,11 @@ public class QueueController : MonoBehaviour
     private float distance;
     private Vector3 direction;
     private bool isGameOver = false;
-    
+
+    private const float tweenDuration = 1f;
+    private const int sequencesCapacity = 50;
+    private const int tweenersCapacity = 1250;
+
     // Start is called before the first frame update
     void Start()
     {

@@ -380,9 +380,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b09406a1968b8f34ea8979a674b70fed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ballPrefabs:
+  - {fileID: 8095726901186332756, guid: c61ac28ee4f85e844b0c40d13257cf16, type: 3}
+  - {fileID: 8095726901186332756, guid: 70e4e24d1aec3104a902a5cf309cbbee, type: 3}
+  - {fileID: 8095726901186332756, guid: 2c73993d886c8a04ebebae2295a2b9a4, type: 3}
+  - {fileID: 8095726901186332756, guid: 17388c946f2869140b05e22fc8020525, type: 3}
   ballPlace: {fileID: 522045981}
-  ballPrefab: {fileID: 8095726901186332756, guid: 2c73993d886c8a04ebebae2295a2b9a4, type: 3}
-  turnSpeed: 80
+  turnSpeed: 100
 --- !u!1 &522045981
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,7 +411,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 522045981}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5000005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 503252178}
@@ -1669,8 +1673,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1613699929}
   m_LocalRotation: {x: -0, y: 0.38268363, z: -0, w: 0.92387944}
-  m_LocalPosition: {x: 3.692, y: 1, z: 1.922}
-  m_LocalScale: {x: 1, y: 1, z: 0.1}
+  m_LocalPosition: {x: 3.683, y: 1, z: 1.931}
+  m_LocalScale: {x: 0.34, y: 0.5, z: 0.1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6

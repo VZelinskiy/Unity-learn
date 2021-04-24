@@ -4,23 +4,41 @@ using DG.Tweening;
 
 public class BallController : MonoBehaviour
 {
-    //public event Action<BallController, BallController> CollisionWithLaunchedBall;
+    public enum BallState
+    {
+        IN_LAUNCHER,
+        LAUNCHED,
+        IN_QUEUE
+    }
+
     public event Action LaunchedBallDestroyed;
 
-    private const string deathColliderTag = "DeathCollider";
-    public Vector3 ballDirection;
     public int id;
 
     [SerializeField] float launchSpeed;
 
-    [SerializeField] bool isInQueue = false;
+    //[SerializeField] bool isInQueue = false;
 
+    private Vector3 ballDirection;
+    private BallState ballState = BallState.IN_QUEUE;
     private readonly float outOfBoundsDistance = 20;
+    private const string deathColliderTag = "DeathCollider";
+
+    public void Initialize(BallState ballState)
+    {
+        this.ballState = ballState;
+    }
+
+    public void LaunchBall(Vector3 direction)
+    {
+        ballDirection = direction;
+        ballState = BallState.LAUNCHED;
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if (!isInQueue)
+        if (ballState == BallState.LAUNCHED)
         {
             MoveBall();
         }
@@ -28,7 +46,7 @@ public class BallController : MonoBehaviour
 
     private void MoveBall()
     {
-        transform.Translate(ballDirection * Time.deltaTime * launchSpeed);
+        transform.Translate(ballDirection * Time.deltaTime * launchSpeed, Space.World);
 
         if (IsOutOfBounds())
         {
@@ -53,7 +71,7 @@ public class BallController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag(deathColliderTag) && isInQueue)
+        if (collision.gameObject.CompareTag(deathColliderTag) && ballState == BallState.IN_QUEUE)
         {
             Debug.Log("GAME OVER!");
             EventBroker.CallGameOver();
@@ -65,7 +83,7 @@ public class BallController : MonoBehaviour
 
         if (otherObj != null)
         {
-            if (otherObj.isInQueue == false)
+            if (otherObj.ballState == BallState.LAUNCHED)
             {
                 Vector3 collisionNormal = collision.GetContact(0).normal;
                 bool isCollisionFront = false;
@@ -76,7 +94,7 @@ public class BallController : MonoBehaviour
                 }
 
                 EventBroker.CallLaunchedBallCollsionWithQueue(otherObj, this, isCollisionFront);
-                otherObj.isInQueue = true;
+                otherObj.ballState = BallState.IN_QUEUE;
             }
         }
     }

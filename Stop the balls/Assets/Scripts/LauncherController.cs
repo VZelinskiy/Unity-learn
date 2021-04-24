@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class LauncherController : MonoBehaviour
 {
+    [SerializeField] BallController[] ballPrefabs;
     [SerializeField] GameObject ballPlace;
-    [SerializeField] BallController ballPrefab;
     [SerializeField] float turnSpeed;
 
-    //private Vector3 launcherRotation;
+    private BallController curBall;
     private float horizontalInput;
     private bool isLaunchedBallAvailable = true;
 
@@ -17,11 +17,13 @@ public class LauncherController : MonoBehaviour
     void Start()
     {
         EventBroker.LaunchedBallCollsionWithQueue += LaunchedBallCollsionWithQueueHandler;
+
+        InitCurBall();
     }
 
     private void LaunchedBallCollsionWithQueueHandler(BallController arg1, BallController arg2, bool arg3)
     {
-        isLaunchedBallAvailable = true;
+        MakeLaunchedBallAvailable();
     }
 
     // Update is called once per frame
@@ -40,15 +42,16 @@ public class LauncherController : MonoBehaviour
 
     private void LaunchBall()
     {
-        BallController ball = Instantiate(ballPrefab, ballPlace.transform.position, Quaternion.identity);
-        ball.ballDirection = gameObject.transform.up;
+        curBall.transform.SetParent(null);
+        curBall.LaunchBall(transform.up);
         isLaunchedBallAvailable = false;
 
-        ball.LaunchedBallDestroyed += MakeLaunchedBallAvailable; 
+        curBall.LaunchedBallDestroyed += MakeLaunchedBallAvailable; 
     }
 
     private void MakeLaunchedBallAvailable()
     {
+        InitCurBall();
         isLaunchedBallAvailable = true;
     }
 
@@ -56,5 +59,11 @@ public class LauncherController : MonoBehaviour
     {
         horizontalInput = Input.GetAxis(horizontalAxisName);
         transform.Rotate(Vector3.back, turnSpeed * horizontalInput * Time.deltaTime);
+    }
+
+    private void InitCurBall()
+    {
+        curBall = Instantiate(ballPrefabs[Random.Range(0, ballPrefabs.Length)], ballPlace.transform.position, Quaternion.identity, transform);
+        curBall.Initialize(BallController.BallState.IN_LAUNCHER);
     }
 }
