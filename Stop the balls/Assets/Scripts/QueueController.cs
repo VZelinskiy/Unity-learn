@@ -86,7 +86,15 @@ public class QueueController : MonoBehaviour
         ballsInQueue.Insert(ballInQueueListId, launchedBall);
         launchedBall.transform.SetParent(transform);
         ResetBallsIdAfterAddingFromCur(ballInQueueListId - 1);
-        StartCoroutine(DestroyThreeOrMoreSameBalls(launchedBall));
+
+        if (AreThereThreeOrMoreSameBalls(launchedBall))
+        {
+            ballsIndexToDestroy.Sort();
+            PlayDestroyBallsFX();
+            StartCoroutine(DestroyThreeOrMoreSameBalls());
+        }
+        
+        //ballsIndexToDestroy.Clear();
     }
 
     private int GetQueueBallsListIdByBallId(int id)
@@ -102,10 +110,8 @@ public class QueueController : MonoBehaviour
         return ballsInQueue.Count;
     }
 
-    private IEnumerator DestroyThreeOrMoreSameBalls(BallController launchedBall)
+    private bool AreThereThreeOrMoreSameBalls(BallController launchedBall)
     {
-        yield return new WaitForSeconds(tweenDuration / 2);
-
         int launchedBallListId = GetQueueBallsListIdByBallId(launchedBall.id);
 
         for (int i = launchedBallListId; i < ballsInQueue.Count; i++)
@@ -133,18 +139,33 @@ public class QueueController : MonoBehaviour
         }
 
         if (ballsIndexToDestroy.Count > 2)
-        {
-            ballsIndexToDestroy.Sort();
-
-            for (int i = ballsIndexToDestroy[0]; i <= ballsIndexToDestroy[ballsIndexToDestroy.Count - 1]; i++)
-            {
-                Destroy(ballsInQueue[i].gameObject);
-            }
-
-            ballsInQueue.RemoveRange(ballsIndexToDestroy[0], ballsIndexToDestroy.Count);
-            ResetBallsIdAfterDeletingFromCur(ballsIndexToDestroy[0]);
+        { 
+            return true;
         }
 
+        ballsIndexToDestroy.Clear();
+        return false;
+    }
+
+    private void PlayDestroyBallsFX()
+    {
+        for (int i = ballsIndexToDestroy[0]; i <= ballsIndexToDestroy[ballsIndexToDestroy.Count - 1]; i++)
+        {
+            ballsInQueue[i].PlayBallDestroyFX();
+        }
+    }
+
+    private IEnumerator DestroyThreeOrMoreSameBalls()
+    {
+        yield return new WaitForSeconds(tweenDuration / 2);
+
+        for (int i = ballsIndexToDestroy[0]; i <= ballsIndexToDestroy[ballsIndexToDestroy.Count - 1]; i++)
+        {
+            Destroy(ballsInQueue[i].gameObject);
+        }
+
+        ballsInQueue.RemoveRange(ballsIndexToDestroy[0], ballsIndexToDestroy.Count);
+        ResetBallsIdAfterDeletingFromCur(ballsIndexToDestroy[0]);
         ballsIndexToDestroy.Clear();
     }
 

@@ -36,6 +36,11 @@ public class BallController : MonoBehaviour
         ballTrailFX.Play();
     }
 
+    public void PlayBallDestroyFX()
+    {
+        ballDestroyFX.Play();
+    }
+
     // Update is called once per frame
     void Update()
     {
