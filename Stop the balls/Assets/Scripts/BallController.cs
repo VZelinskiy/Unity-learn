@@ -15,9 +15,9 @@ public class BallController : MonoBehaviour
 
     public int id;
 
+    [SerializeField] ParticleSystem ballTrailFX;
+    [SerializeField] ParticleSystem ballDestroyFX;
     [SerializeField] float launchSpeed;
-
-    //[SerializeField] bool isInQueue = false;
 
     private Vector3 ballDirection;
     private BallState ballState = BallState.IN_QUEUE;
@@ -33,6 +33,7 @@ public class BallController : MonoBehaviour
     {
         ballDirection = direction;
         ballState = BallState.LAUNCHED;
+        ballTrailFX.Play();
     }
 
     // Update is called once per frame
@@ -95,6 +96,7 @@ public class BallController : MonoBehaviour
 
                 EventBroker.CallLaunchedBallCollsionWithQueue(otherObj, this, isCollisionFront);
                 otherObj.ballState = BallState.IN_QUEUE;
+                otherObj.ballTrailFX.Stop();
             }
         }
     }
