@@ -6,13 +6,17 @@ using UnityEngine;
 public class QueueController : MonoBehaviour
 {
     [SerializeField] List<BallController> ballsInQueue;
-    [SerializeField] float ballDiameter = 1;
-
+    [SerializeField] AudioClip ballsCollisionSFX;
+    [SerializeField] AudioClip ballsDestroySFX;
+    
+    private AudioSource audioSource;
     private List<Vector3> positions;
     private List<int> ballsIndexToDestroy;
     private float distance;
     private Vector3 direction;
     private bool isGameOver = false;
+
+    private readonly float ballDiameter = 1;
 
     private const float tweenDuration = 1f;
     private const int sequencesCapacity = 50;
@@ -21,6 +25,8 @@ public class QueueController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         DOTween.SetTweensCapacity(tweenersCapacity, sequencesCapacity);
 
         EventBroker.LaunchedBallCollsionWithQueue += AddBallToQueue;
@@ -163,6 +169,8 @@ public class QueueController : MonoBehaviour
         {
             Destroy(ballsInQueue[i].gameObject);
         }
+
+        audioSource.PlayOneShot(ballsDestroySFX);
 
         ballsInQueue.RemoveRange(ballsIndexToDestroy[0], ballsIndexToDestroy.Count);
         ResetBallsIdAfterDeletingFromCur(ballsIndexToDestroy[0]);
