@@ -6,6 +6,7 @@ using UnityEngine;
 public class QueueController : MonoBehaviour
 {
     [SerializeField] List<BallController> ballsInQueue;
+    //[SerializeField] BallController[] ballsPrefabs;
     [SerializeField] AudioClip ballsCollisionSFX;
     [SerializeField] AudioClip ballsDestroySFX;
     
@@ -15,10 +16,12 @@ public class QueueController : MonoBehaviour
     private float distance;
     private Vector3 direction;
     private bool isGameOver = false;
+    private int lastBallId = 0;
 
     private readonly float ballDiameter = 1;
+    //private readonly float ballSpawnTime = 0.5f;
 
-    private const float tweenDuration = 1f;
+    private const float tweenDuration = 2f;
     private const int sequencesCapacity = 50;
     private const int tweenersCapacity = 1250;
 
@@ -29,17 +32,15 @@ public class QueueController : MonoBehaviour
 
         DOTween.SetTweensCapacity(tweenersCapacity, sequencesCapacity);
 
-        EventBroker.LaunchedBallCollsionWithQueue += AddBallToQueue;
+        EventBroker.LaunchedBallCollsionWithQueue += AddLaunchedBallToQueue;
         EventBroker.GameOver += GameOverHandler;
+        EventBroker.NewBallIWasSpawned += SpawnNewBallHandler;
 
         positions = new List<Vector3>();
         ballsIndexToDestroy = new List<int>();
-
-        for (int i = 0; i < ballsInQueue.Count; i++)
-        {
-            positions.Add(ballsInQueue[i].transform.position);
-            ballsInQueue[i].id = i;
-        }
+        
+        positions.Add(ballsInQueue[0].transform.position);
+        ballsInQueue[0].id = 0;
     }
 
     private void GameOverHandler()
@@ -75,7 +76,15 @@ public class QueueController : MonoBehaviour
         }
     }
 
-    private void AddBallToQueue(BallController launchedBall, BallController ballInQueue, bool isCollisionFront)
+    private void SpawnNewBallHandler(BallController spawnedBall)
+    {
+        lastBallId++;
+        spawnedBall.id = lastBallId;
+        positions.Insert(0, positions[0] + direction * ballDiameter);
+        ballsInQueue.Add(spawnedBall);
+    }
+
+    private void AddLaunchedBallToQueue(BallController launchedBall, BallController ballInQueue, bool isCollisionFront)
     {
         positions.Insert(0, positions[0] + direction * ballDiameter);
         int ballInQueueListId;
@@ -92,6 +101,7 @@ public class QueueController : MonoBehaviour
         ballsInQueue.Insert(ballInQueueListId, launchedBall);
         launchedBall.transform.SetParent(transform);
         ResetBallsIdAfterAddingFromCur(ballInQueueListId - 1);
+        lastBallId = ballsInQueue[ballsInQueue.Count - 1].id;
 
         if (AreThereThreeOrMoreSameBalls(launchedBall))
         {

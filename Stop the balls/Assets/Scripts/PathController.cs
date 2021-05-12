@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ public class PathController : MonoBehaviour
 
     private Vector3[] waypoints;
     private Tween pathTween;
-    private const int PATH_TIME = 30;
+    private const int PATH_TIME = 60;
 
     // Start is called before the first frame update
     void Start()
@@ -22,11 +23,19 @@ public class PathController : MonoBehaviour
             waypoints[i] = waypointsObjects[i].transform.position;
         }
 
-        pathTween = gameObject.transform.DOPath(waypoints, PATH_TIME, PathType.Linear, PathMode.Full3D, 10, Color.red).SetEase(Ease.Linear).SetLoops(-1);
+        StartCoroutine(StartPathTween());
+        //pathTween = gameObject.transform.DOPath(waypoints, PATH_TIME, PathType.Linear, PathMode.Full3D, 10, Color.red).SetEase(Ease.Linear).SetLoops(-1);
     }
 
     private void StopPathTween()
     {
         pathTween.Kill();
+    }
+
+    private IEnumerator StartPathTween()
+    {
+        yield return new WaitForSeconds(3);
+
+        pathTween = gameObject.transform.DOPath(waypoints, PATH_TIME, PathType.Linear, PathMode.Full3D, 10, Color.red).SetEase(Ease.Linear).SetLoops(-1);
     }
 }
