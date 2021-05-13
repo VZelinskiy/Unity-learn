@@ -21,7 +21,7 @@ public class QueueController : MonoBehaviour
     private readonly float ballDiameter = 1;
     //private readonly float ballSpawnTime = 0.5f;
 
-    private const float tweenDuration = 2f;
+    private const float tweenDuration = 3f;
     private const int sequencesCapacity = 50;
     private const int tweenersCapacity = 1250;
 
@@ -80,7 +80,7 @@ public class QueueController : MonoBehaviour
     {
         lastBallId++;
         spawnedBall.id = lastBallId;
-        positions.Insert(0, positions[0] + direction * ballDiameter);
+        positions.Insert(positions.Count - 1, positions[positions.Count - 1]);
         ballsInQueue.Add(spawnedBall);
     }
 
