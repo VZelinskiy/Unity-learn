@@ -66,4 +66,9 @@ public class LauncherController : MonoBehaviour
         curBall = Instantiate(ballPrefabs[Random.Range(0, ballPrefabs.Length)], ballPlace.transform.position, Quaternion.identity, transform);
         curBall.Initialize(BallController.BallState.IN_LAUNCHER);
     }
+
+    private void OnDestroy()
+    {
+        EventBroker.LaunchedBallCollsionWithQueue -= LaunchedBallCollsionWithQueueHandler;
+    }
 }

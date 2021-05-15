@@ -15,7 +15,7 @@ public class QueueController : MonoBehaviour
     private List<int> ballsIndexToDestroy;
     private float distance;
     private Vector3 direction;
-    private bool isGameOver = false;
+    //private bool isGameOver = false;
     private int lastBallId = 0;
 
     private readonly float ballDiameter = 1;
@@ -33,7 +33,7 @@ public class QueueController : MonoBehaviour
         DOTween.SetTweensCapacity(tweenersCapacity, sequencesCapacity);
 
         EventBroker.LaunchedBallCollsionWithQueue += AddLaunchedBallToQueue;
-        EventBroker.GameOver += GameOverHandler;
+        //EventBroker.GameOver += GameOverHandler;
         EventBroker.NewBallIWasSpawned += SpawnNewBallHandler;
 
         positions = new List<Vector3>();
@@ -43,18 +43,18 @@ public class QueueController : MonoBehaviour
         ballsInQueue[0].id = 0;
     }
 
-    private void GameOverHandler()
+    /*private void GameOverHandler()
     {
         isGameOver = true;
-    }
+    }*/
 
     // Update is called once per frame
     void Update()
     {
-        if (!isGameOver)
-        {
+        //if (!isGameOver)
+        //{
             Move();
-        }
+        //}
     }
 
     private void Move()
@@ -215,5 +215,11 @@ public class QueueController : MonoBehaviour
                 newId++;
             }
         }
+    }
+
+    private void OnDestroy()
+    {
+        EventBroker.LaunchedBallCollsionWithQueue -= AddLaunchedBallToQueue;
+        EventBroker.NewBallIWasSpawned -= SpawnNewBallHandler;
     }
 }
