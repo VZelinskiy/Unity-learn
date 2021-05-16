@@ -1,12 +1,14 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class QueueController : MonoBehaviour
 {
+    public event Action<int> BallsDestroyed;
+
     [SerializeField] List<BallController> ballsInQueue;
-    //[SerializeField] BallController[] ballsPrefabs;
     [SerializeField] AudioClip ballsCollisionSFX;
     [SerializeField] AudioClip ballsDestroySFX;
     
@@ -15,12 +17,9 @@ public class QueueController : MonoBehaviour
     private List<int> ballsIndexToDestroy;
     private float distance;
     private Vector3 direction;
-    //private bool isGameOver = false;
     private int lastBallId = 0;
 
     private readonly float ballDiameter = 1;
-    //private readonly float ballSpawnTime = 0.5f;
-
     private const float tweenDuration = 3f;
     private const int sequencesCapacity = 50;
     private const int tweenersCapacity = 1250;
@@ -34,7 +33,7 @@ public class QueueController : MonoBehaviour
 
         EventBroker.LaunchedBallCollsionWithQueue += AddLaunchedBallToQueue;
         //EventBroker.GameOver += GameOverHandler;
-        EventBroker.NewBallIWasSpawned += SpawnNewBallHandler;
+        EventBroker.NewBallWasSpawned += SpawnNewBallHandler;
 
         positions = new List<Vector3>();
         ballsIndexToDestroy = new List<int>();
@@ -183,6 +182,7 @@ public class QueueController : MonoBehaviour
         audioSource.PlayOneShot(ballsDestroySFX);
 
         ballsInQueue.RemoveRange(ballsIndexToDestroy[0], ballsIndexToDestroy.Count);
+        BallsDestroyed?.Invoke(ballsIndexToDestroy.Count);
         ResetBallsIdAfterDeletingFromCur(ballsIndexToDestroy[0]);
         ballsIndexToDestroy.Clear();
     }
@@ -220,6 +220,6 @@ public class QueueController : MonoBehaviour
     private void OnDestroy()
     {
         EventBroker.LaunchedBallCollsionWithQueue -= AddLaunchedBallToQueue;
-        EventBroker.NewBallIWasSpawned -= SpawnNewBallHandler;
+        EventBroker.NewBallWasSpawned -= SpawnNewBallHandler;
     }
 }

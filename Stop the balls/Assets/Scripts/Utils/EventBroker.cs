@@ -5,7 +5,7 @@ public class EventBroker
 {
     public static event Action<BallController, BallController, bool> LaunchedBallCollsionWithQueue;
     public static event Action GameOver;
-    public static event Action<BallController> NewBallIWasSpawned;
+    public static event Action<BallController> NewBallWasSpawned;
 
     public static void CallLaunchedBallCollsionWithQueue(BallController launchedBall, BallController ballInQueue, bool isCollisionFront)
     {
@@ -17,8 +17,8 @@ public class EventBroker
         GameOver?.Invoke();
     }
 
-    public static void CallNewBallIWasSpawned(BallController spawnedBall)
+    public static void CallNewBallWasSpawned(BallController spawnedBall)
     {
-        NewBallIWasSpawned?.Invoke(spawnedBall);
+        NewBallWasSpawned?.Invoke(spawnedBall);
     }
 }

@@ -28,7 +28,7 @@ public class BallsSpawner : MonoBehaviour
             newBall.Initialize(BallController.BallState.IN_QUEUE);
             newBall.transform.position = new Vector3(xSpawnPos, ySpawnPos, zSpawnPos);
             newBall.transform.SetParent(transform);
-            EventBroker.CallNewBallIWasSpawned(newBall);
+            EventBroker.CallNewBallWasSpawned(newBall);
         //}
 
         
