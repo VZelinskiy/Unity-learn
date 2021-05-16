@@ -32,7 +32,6 @@ public class QueueController : MonoBehaviour
         DOTween.SetTweensCapacity(tweenersCapacity, sequencesCapacity);
 
         EventBroker.LaunchedBallCollsionWithQueue += AddLaunchedBallToQueue;
-        //EventBroker.GameOver += GameOverHandler;
         EventBroker.NewBallWasSpawned += SpawnNewBallHandler;
 
         positions = new List<Vector3>();
@@ -42,18 +41,10 @@ public class QueueController : MonoBehaviour
         ballsInQueue[0].id = 0;
     }
 
-    /*private void GameOverHandler()
-    {
-        isGameOver = true;
-    }*/
-
     // Update is called once per frame
     void Update()
     {
-        //if (!isGameOver)
-        //{
-            Move();
-        //}
+        Move();
     }
 
     private void Move()
@@ -99,6 +90,7 @@ public class QueueController : MonoBehaviour
         
         ballsInQueue.Insert(ballInQueueListId, launchedBall);
         launchedBall.transform.SetParent(transform);
+        audioSource.PlayOneShot(ballsCollisionSFX);
         ResetBallsIdAfterAddingFromCur(ballInQueueListId - 1);
         lastBallId = ballsInQueue[ballsInQueue.Count - 1].id;
 

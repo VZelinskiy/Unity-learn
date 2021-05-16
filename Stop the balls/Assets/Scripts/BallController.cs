@@ -79,12 +79,9 @@ public class BallController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag(deathColliderTag) && ballState == BallState.IN_QUEUE)
         {
-            //Debug.Log("GAME OVER!");
-            //EventBroker.CallGameOver();
             Destroy(collision.gameObject);
 
             StartCoroutine(GameManager.Instance.GameOver());
-            //Time.timeScale = 0;
         }
 
         BallController otherObj = collision.gameObject.GetComponent<BallController>();
