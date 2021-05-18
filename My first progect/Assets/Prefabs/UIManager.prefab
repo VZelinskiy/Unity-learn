@@ -618,6 +618,7 @@ MonoBehaviour:
       m_KeyId: 1411326029824
       m_Key: 
     m_FallbackState: 0
+    m_WaitForCompletion: 1
   m_FormatArguments: []
   m_UpdateString:
     m_PersistentCalls:
@@ -855,6 +856,7 @@ MonoBehaviour:
       m_KeyId: 431047310716928
       m_Key: 
     m_FallbackState: 0
+    m_WaitForCompletion: 1
   m_FormatArguments: []
   m_UpdateString:
     m_PersistentCalls:
@@ -1180,6 +1182,7 @@ MonoBehaviour:
       m_KeyId: 431193784201216
       m_Key: 
     m_FallbackState: 0
+    m_WaitForCompletion: 1
   m_FormatArguments: []
   m_UpdateString:
     m_PersistentCalls:
@@ -1792,6 +1795,7 @@ MonoBehaviour:
       m_KeyId: 430941782028288
       m_Key: 
     m_FallbackState: 0
+    m_WaitForCompletion: 1
   m_FormatArguments: []
   m_UpdateString:
     m_PersistentCalls:
@@ -2429,6 +2433,7 @@ MonoBehaviour:
       m_KeyId: 1372142841856
       m_Key: 
     m_FallbackState: 0
+    m_WaitForCompletion: 1
   m_FormatArguments: []
   m_UpdateString:
     m_PersistentCalls:
@@ -3417,6 +3422,7 @@ MonoBehaviour:
       m_KeyId: 1696773292044288
       m_Key: 
     m_FallbackState: 0
+    m_WaitForCompletion: 1
   m_FormatArguments: []
   m_UpdateString:
     m_PersistentCalls:
@@ -3950,6 +3956,7 @@ MonoBehaviour:
       m_KeyId: 431665391742976
       m_Key: 
     m_FallbackState: 0
+    m_WaitForCompletion: 1
   m_FormatArguments: []
   m_UpdateString:
     m_PersistentCalls:
@@ -4804,8 +4811,8 @@ RectTransform:
   m_Father: {fileID: 6519125573914706394}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.75, y: 0}
+  m_AnchorMax: {x: 0.75, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5059,6 +5066,7 @@ MonoBehaviour:
       m_KeyId: 69614317568
       m_Key: 
     m_FallbackState: 0
+    m_WaitForCompletion: 1
   m_FormatArguments: []
   m_UpdateString:
     m_PersistentCalls:
@@ -5446,6 +5454,7 @@ MonoBehaviour:
       m_KeyId: 430333880578048
       m_Key: 
     m_FallbackState: 0
+    m_WaitForCompletion: 1
   m_FormatArguments: []
   m_UpdateString:
     m_PersistentCalls:
@@ -5559,6 +5568,7 @@ MonoBehaviour:
       m_KeyId: 1372142841856
       m_Key: 
     m_FallbackState: 0
+    m_WaitForCompletion: 1
   m_FormatArguments: []
   m_UpdateString:
     m_PersistentCalls:
@@ -5672,6 +5682,7 @@ MonoBehaviour:
       m_KeyId: 1620449832960
       m_Key: 
     m_FallbackState: 0
+    m_WaitForCompletion: 1
   m_FormatArguments: []
   m_UpdateString:
     m_PersistentCalls:
@@ -5720,7 +5731,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.75, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -6028,6 +6039,7 @@ MonoBehaviour:
       m_KeyId: 430149960347648
       m_Key: 
     m_FallbackState: 0
+    m_WaitForCompletion: 1
   m_FormatArguments: []
   m_UpdateString:
     m_PersistentCalls:
@@ -6076,7 +6088,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.75, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -6385,6 +6397,7 @@ MonoBehaviour:
       m_KeyId: 1253855080448
       m_Key: 
     m_FallbackState: 0
+    m_WaitForCompletion: 1
   m_FormatArguments: []
   m_UpdateString:
     m_PersistentCalls:
@@ -6432,8 +6445,8 @@ RectTransform:
   m_Father: {fileID: 6519125572114616596}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.8333333, y: 0}
+  m_AnchorMax: {x: 0.8333333, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7225,7 +7238,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6519125573455212098
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7270,6 +7283,7 @@ MonoBehaviour:
         m_KeyId: 440845079031808
         m_Key: 
       m_FallbackState: 0
+      m_WaitForCompletion: 1
     color: {r: 0, g: 0, b: 0, a: 1}
   - name:
       m_TableReference:
@@ -7278,6 +7292,7 @@ MonoBehaviour:
         m_KeyId: 440782248357888
         m_Key: 
       m_FallbackState: 0
+      m_WaitForCompletion: 1
     color: {r: 1, g: 1, b: 1, a: 1}
   - name:
       m_TableReference:
@@ -7286,6 +7301,7 @@ MonoBehaviour:
         m_KeyId: 440946644103168
         m_Key: 
       m_FallbackState: 0
+      m_WaitForCompletion: 1
     color: {r: 1, g: 0, b: 0, a: 1}
   - name:
       m_TableReference:
@@ -7294,6 +7310,7 @@ MonoBehaviour:
         m_KeyId: 441011500625920
         m_Key: 
       m_FallbackState: 0
+      m_WaitForCompletion: 1
     color: {r: 1, g: 0.49358016, b: 0, a: 1}
   - name:
       m_TableReference:
@@ -7302,6 +7319,7 @@ MonoBehaviour:
         m_KeyId: 440887483445248
         m_Key: 
       m_FallbackState: 0
+      m_WaitForCompletion: 1
     color: {r: 0.9969337, g: 1, b: 0, a: 1}
   - name:
       m_TableReference:
@@ -7310,6 +7328,7 @@ MonoBehaviour:
         m_KeyId: 440975941316608
         m_Key: 
       m_FallbackState: 0
+      m_WaitForCompletion: 1
     color: {r: 0, g: 1, b: 0, a: 1}
   - name:
       m_TableReference:
@@ -7318,6 +7337,7 @@ MonoBehaviour:
         m_KeyId: 441190572240896
         m_Key: 
       m_FallbackState: 0
+      m_WaitForCompletion: 1
     color: {r: 0, g: 1, b: 0.99999976, a: 1}
   - name:
       m_TableReference:
@@ -7326,6 +7346,7 @@ MonoBehaviour:
         m_KeyId: 441228945928192
         m_Key: 
       m_FallbackState: 0
+      m_WaitForCompletion: 1
     color: {r: 0, g: 0, b: 1, a: 1}
   - name:
       m_TableReference:
@@ -7334,6 +7355,7 @@ MonoBehaviour:
         m_KeyId: 441102785458176
         m_Key: 
       m_FallbackState: 0
+      m_WaitForCompletion: 1
     color: {r: 1, g: 0, b: 0.99784946, a: 1}
   - name:
       m_TableReference:
@@ -7342,6 +7364,7 @@ MonoBehaviour:
         m_KeyId: 441155591745536
         m_Key: 
       m_FallbackState: 0
+      m_WaitForCompletion: 1
     color: {r: 1, g: 0, b: 0.48946857, a: 1}
   audioMixer: {fileID: 24100000, guid: 77bc0444a5af50f4ea157a8bfeea7acc, type: 2}
   resolutionDropdown: {fileID: 2675391820974907185}
@@ -7666,6 +7689,7 @@ MonoBehaviour:
       m_KeyId: 431102264487936
       m_Key: 
     m_FallbackState: 0
+    m_WaitForCompletion: 1
   m_FormatArguments: []
   m_UpdateString:
     m_PersistentCalls:
@@ -7714,7 +7738,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.8333333, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -8032,6 +8056,7 @@ MonoBehaviour:
       m_KeyId: 430452461940736
       m_Key: 
     m_FallbackState: 0
+    m_WaitForCompletion: 1
   m_FormatArguments: []
   m_UpdateString:
     m_PersistentCalls:
@@ -8189,8 +8214,8 @@ RectTransform:
   m_Father: {fileID: 6519125573789679869}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.75, y: 0}
+  m_AnchorMax: {x: 0.75, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9170,6 +9195,7 @@ MonoBehaviour:
       m_KeyId: 1411326029824
       m_Key: 
     m_FallbackState: 0
+    m_WaitForCompletion: 1
   m_FormatArguments: []
   m_UpdateString:
     m_PersistentCalls:
@@ -9453,6 +9479,7 @@ MonoBehaviour:
       m_KeyId: 1372142841856
       m_Key: 
     m_FallbackState: 0
+    m_WaitForCompletion: 1
   m_FormatArguments: []
   m_UpdateString:
     m_PersistentCalls:
@@ -9566,6 +9593,7 @@ MonoBehaviour:
       m_KeyId: 1729497542656
       m_Key: 
     m_FallbackState: 0
+    m_WaitForCompletion: 1
   m_FormatArguments: []
   m_UpdateString:
     m_PersistentCalls:
@@ -9974,6 +10002,7 @@ MonoBehaviour:
       m_KeyId: 1372142841856
       m_Key: 
     m_FallbackState: 0
+    m_WaitForCompletion: 1
   m_FormatArguments: []
   m_UpdateString:
     m_PersistentCalls:
@@ -10087,6 +10116,7 @@ MonoBehaviour:
       m_KeyId: 1411326029824
       m_Key: 
     m_FallbackState: 0
+    m_WaitForCompletion: 1
   m_FormatArguments: []
   m_UpdateString:
     m_PersistentCalls:
@@ -10279,6 +10309,7 @@ MonoBehaviour:
       m_KeyId: 430559848706048
       m_Key: 
     m_FallbackState: 0
+    m_WaitForCompletion: 1
   m_FormatArguments: []
   m_UpdateString:
     m_PersistentCalls:
@@ -11726,6 +11757,7 @@ MonoBehaviour:
       m_KeyId: 1696609252814848
       m_Key: 
     m_FallbackState: 0
+    m_WaitForCompletion: 1
   m_FormatArguments: []
   m_UpdateString:
     m_PersistentCalls:

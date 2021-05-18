@@ -221,10 +221,10 @@ public class OptionsMenu : MonoBehaviour
         {
             var localizedTextHandle = fontColors[i].name.GetLocalizedString();
             yield return localizedTextHandle;
+            //TO DO
+            //string option = localizedTextHandle.Result;
 
-            string option = localizedTextHandle.Result;
-
-            options.Add(option);
+            //options.Add(option);
         }
 
         fontColorDropdown.AddOptions(options);
@@ -275,7 +275,8 @@ public class OptionsMenu : MonoBehaviour
             var option = fontColors[i];
 
             var localizedTextHandle = option.name.GetLocalizedString();
-            localizedTextHandle.Completed += (handle) =>
+            //TO DO
+            /*localizedTextHandle.Completed += (handle) =>
             {
                 fontColorDropdown.options[optionI].text = handle.Result;
 
@@ -283,7 +284,7 @@ public class OptionsMenu : MonoBehaviour
                 {
                     fontColorDropdown.captionText.text = handle.Result;
                 }
-            };
+            };*/
         }
     }
 }
