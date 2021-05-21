@@ -24,7 +24,6 @@ public class PathController : MonoBehaviour
         }
 
         StartCoroutine(StartPathTween());
-        //pathTween = gameObject.transform.DOPath(waypoints, PATH_TIME, PathType.Linear, PathMode.Full3D, 10, Color.red).SetEase(Ease.Linear).SetLoops(-1);
     }
 
     private void StopPathTween()

@@ -100,8 +100,6 @@ public class QueueController : MonoBehaviour
             PlayDestroyBallsFX();
             StartCoroutine(DestroyThreeOrMoreSameBalls());
         }
-        
-        //ballsIndexToDestroy.Clear();
     }
 
     private int GetQueueBallsListIdByBallId(int id)

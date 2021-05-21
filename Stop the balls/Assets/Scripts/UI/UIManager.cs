@@ -9,7 +9,6 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] PauseMenu pauseMenu;
     [SerializeField] OptionsMenu optionsMenu;
     [SerializeField] GameOverMenu gameOverMenu;
-    //[SerializeField] HUDController hud;
     [SerializeField] Camera mainMenuCamera;
 
     void Start()
@@ -27,7 +26,6 @@ public class UIManager : Singleton<UIManager>
     {
         pauseMenu.gameObject.SetActive(currentState == GameManager.GameState.PAUSED);
         gameOverMenu.gameObject.SetActive(currentState == GameManager.GameState.GAME_OVER);
-        //hud.gameObject.gameObject.SetActive(currentState != GameManager.GameState.PREGAME);
     }
 
     public void SetActiveOptionsMenu(bool isActive)
