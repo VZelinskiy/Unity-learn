@@ -6,6 +6,7 @@ using System;
 public class InputReader : ScriptableObject, InputSystem_Actions.IPlayerActions
 {
     public event Action<Vector2> MoveEvent = delegate { };
+    public event Action<bool> AttackEvent = delegate { };
 
     private InputSystem_Actions gameInput;
 
@@ -50,7 +51,8 @@ public class InputReader : ScriptableObject, InputSystem_Actions.IPlayerActions
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        //throw new NotImplementedException();
+        if (context.performed) AttackEvent.Invoke(true);
+        else if (context.canceled) AttackEvent.Invoke(false);
     }
 
     public void OnInteract(InputAction.CallbackContext context)
