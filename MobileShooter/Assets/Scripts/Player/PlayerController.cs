@@ -1,9 +1,9 @@
 using Cysharp.Threading.Tasks;
-using System;
 using System.Threading;
 using UnityEngine;
 
 [RequireComponent (typeof(CharacterController))]
+[RequireComponent(typeof(Health))]
 public class PlayerController : MonoBehaviour
 {
     [Header("References")]
@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnMove(Vector2 input)
     {
-        Debug.Log($"PlayerController got input : {input}");
+        //Debug.Log($"PlayerController got input : {input}");
         moveInput = input;
     }
 
