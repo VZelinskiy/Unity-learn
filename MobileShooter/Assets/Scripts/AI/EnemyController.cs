@@ -12,12 +12,17 @@ public class EnemyController : MonoBehaviour
     [Header("Combat Settings")]
     [SerializeField] private float damageToPlayer = 10;
     [SerializeField] private float attackCooldown = 1;
+    [SerializeField] private float attackRange = 1.5f;
 
-    private float nextAttackTime;
+    //private float nextAttackTime;
     private Transform playerTransform;
     private CharacterController characterController;
     private Health health;
     private Action<EnemyController> onReturnToPool;
+    
+    private StateMachine stateMachine;
+    private IState chaseState;
+    private IState attackState;
 
     // ініціалізація при отриманні з пулу
     public void Initialize(Action<EnemyController> returnAction, Transform player, Vector3 spawnPosition)
@@ -34,12 +39,30 @@ public class EnemyController : MonoBehaviour
         characterController.enabled = false;
         transform.position = spawnPosition;
         characterController.enabled = true;
+
+        // ініціалізуємо стани
+        chaseState = new EnemyChaseState(this, playerTransform, characterController, moveSpeed , rotationSpeed, attackRange);
+        attackState = new EnemyAttackState(this, playerTransform, attackRange, damageToPlayer, attackCooldown);
+
+        // плчинаємо з переслідування
+        stateMachine.Initialize(chaseState);
+    }
+
+    public void SwitchToChaseState()
+    {
+        stateMachine.ChangeState(chaseState);
+    }
+
+    public void SwitchToAttackState()
+    {
+        stateMachine.ChangeState(attackState);
     }
 
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
         health = GetComponent<Health>();
+        stateMachine = new StateMachine();
     }
 
     //// Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -82,47 +105,49 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerTransform == null) return;
+        //if (playerTransform == null) return;
 
-        MoveAndRotateTowardsPlayer();
+        //MoveAndRotateTowardsPlayer();
+
+        stateMachine.Update();
     }
 
-    private void MoveAndRotateTowardsPlayer()
-    {
-        // рахуємо вектор напрямку до гравця
-        Vector3 direction = (playerTransform.position - transform.position);
-        // фіксуємо висоту щоб ворог не літав і не нахилявся по вертикалі
-        direction.y = 0;
+    //private void MoveAndRotateTowardsPlayer()
+    //{
+    //    // рахуємо вектор напрямку до гравця
+    //    Vector3 direction = (playerTransform.position - transform.position);
+    //    // фіксуємо висоту щоб ворог не літав і не нахилявся по вертикалі
+    //    direction.y = 0;
 
-        if (direction.sqrMagnitude > 0.01)
-        {
-            direction.Normalize();
+    //    if (direction.sqrMagnitude > 0.01)
+    //    {
+    //        direction.Normalize();
 
-            // плавний поворот до гравця
-            Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+    //        // плавний поворот до гравця
+    //        Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
+    //        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-            // рух за допомогою CharacterController
-            characterController.Move(direction * (moveSpeed * Time.deltaTime));
-        }
-    }
+    //        // рух за допомогою CharacterController
+    //        characterController.Move(direction * (moveSpeed * Time.deltaTime));
+    //    }
+    //}
 
-    private void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        // якщо ворог врізався у гравця, наносимо йому урон
-        if (hit.gameObject.CompareTag("Player"))
-        {
-            // перевіряємо, чи минув кулдаун
-            if (Time.time >= nextAttackTime)
-            {
-                if (hit.gameObject.TryGetComponent<IDamageable>(out var playerDamageable))
-                {
-                    playerDamageable.TakeDamage(damageToPlayer);
+    //private void OnControllerColliderHit(ControllerColliderHit hit)
+    //{
+    //    // якщо ворог врізався у гравця, наносимо йому урон
+    //    if (hit.gameObject.CompareTag("Player"))
+    //    {
+    //        // перевіряємо, чи минув кулдаун
+    //        if (Time.time >= nextAttackTime)
+    //        {
+    //            if (hit.gameObject.TryGetComponent<IDamageable>(out var playerDamageable))
+    //            {
+    //                playerDamageable.TakeDamage(damageToPlayer);
 
-                    // встановлюємо час наступної можливої атаки
-                    nextAttackTime = Time.time + attackCooldown;
-                }
-            }
-        }
-    }
+    //                // встановлюємо час наступної можливої атаки
+    //                nextAttackTime = Time.time + attackCooldown;
+    //            }
+    //        }
+    //    }
+    //}
 }
