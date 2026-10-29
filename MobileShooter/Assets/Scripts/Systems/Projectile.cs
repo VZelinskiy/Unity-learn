@@ -12,10 +12,14 @@ public class Projectile : MonoBehaviour
 
     private Action<Projectile> onReturnToPool;
     private CancellationTokenSource cts;
+    private Vector3 moveDirection;
 
-    public void Initialize(Action<Projectile> returnAction)
+    public void Initialize(Action<Projectile> returnAction, Vector3 direction)
     {
         onReturnToPool = returnAction;
+        moveDirection = direction.normalized;
+
+        transform.SetParent(null);
     }
 
     private void OnEnable()
@@ -33,8 +37,10 @@ public class Projectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // рухаємо кулю вперед по її власній осі z
-        transform.Translate(Vector3.forward * (speed * Time.deltaTime));
+        //transform.Translate(Vector3.forward * (speed * Time.deltaTime));
+
+        // рухаємо кулю у світовому просторі за зафіксованим вектором
+        transform.position += moveDirection * (speed * Time.deltaTime);
     }
 
     private async UniTaskVoid LifeTImeRoutine(CancellationToken token)

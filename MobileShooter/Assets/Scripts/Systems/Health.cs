@@ -6,8 +6,11 @@ public class Health : MonoBehaviour, IDamageable
     [SerializeField] private float maxHealth = 50;
     private float currentHealth;
 
-    public event Action<float> OnHealthChanged;
+    public event Action<float, float> OnHealthChanged;
     public event Action OnDie;
+
+    public float CurrentHealth => currentHealth;
+    public float MaxHealth => maxHealth;
 
     private void Awake()
     {
@@ -21,7 +24,8 @@ public class Health : MonoBehaviour, IDamageable
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
-        OnHealthChanged?.Invoke(currentHealth);
+        NotifyHealthChanged();
+        //OnHealthChanged?.Invoke(currentHealth);
         Debug.Log($"{gameObject.name} took {amount} damage. Current health: {currentHealth}");
 
         if (currentHealth <= 0)
@@ -34,6 +38,12 @@ public class Health : MonoBehaviour, IDamageable
     {
         currentHealth = maxHealth;
         gameObject.SetActive(true);
+        NotifyHealthChanged();
+    }
+
+    private void NotifyHealthChanged()
+    {
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
     private void Die()
