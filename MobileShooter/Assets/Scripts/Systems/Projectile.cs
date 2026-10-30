@@ -13,11 +13,13 @@ public class Projectile : MonoBehaviour
     private Action<Projectile> onReturnToPool;
     private CancellationTokenSource cts;
     private Vector3 moveDirection;
+    private bool hasHit;
 
     public void Initialize(Action<Projectile> returnAction, Vector3 direction)
     {
         onReturnToPool = returnAction;
         moveDirection = direction.normalized;
+        hasHit = false;
 
         transform.SetParent(null);
     }
@@ -65,15 +67,16 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Bullet collide");
+        //Debug.Log("Bullet collide");
+        if (hasHit) return;
 
         // перевіряємо, чи обєкт, у який влучили, має компонент здоровя (реалізує IDamageable)
         // також переконуємося, що куля не влучає в самого гравця (якщо у гравця є свій колайдер)
+        if (other.CompareTag("Player")) return;
+
         if (other.TryGetComponent<IDamageable>(out var damageable))
         {
-            // не наносимо шкоду власному гравцю (якщо у гравця теж стоїть Health)
-            if (other.CompareTag("Player")) return;
-
+            hasHit = true;
             damageable.TakeDamage(damage);
         }
 
