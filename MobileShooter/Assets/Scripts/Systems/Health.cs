@@ -52,6 +52,6 @@ public class Health : MonoBehaviour, IDamageable
         Debug.Log($"{gameObject.name} died!");
 
         // для початку просто вимикаємо обєкт (пізніше повертатимо його у свій пул ворогів)
-        gameObject.SetActive( false );
+        //gameObject.SetActive( false );
     }
 }

@@ -102,6 +102,13 @@ public class WaveManager : MonoBehaviour
         {
             Debug.Log("All waves copleted successfully!");
             OnAllWavesCompleted?.Invoke();
+
+            // викликаємо екран перемоги через GameManager
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.TriggerVictory();
+            }
+
             return;
         }
 

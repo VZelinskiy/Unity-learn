@@ -45,7 +45,7 @@ public class WaveUI : MonoBehaviour
     {
         if (waveInfoText != null)
         {
-            waveInfoText.text = "VICTORY!";
+            waveInfoText.text = "";
         }
     }
 }
