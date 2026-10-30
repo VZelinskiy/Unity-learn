@@ -2,6 +2,7 @@
   <Project Path="UniTask.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="UniTask.Linq.csproj" />
+  <Project Path="ithappy.Apocalypse_Free.csproj" />
   <Project Path="UniTask.Addressables.csproj" />
   <Project Path="UniTask.TextMeshPro.csproj" />
   <Project Path="UniTask.Editor.csproj" />
