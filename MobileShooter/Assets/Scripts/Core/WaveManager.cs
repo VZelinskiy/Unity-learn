@@ -28,6 +28,7 @@ public class WaveManager : MonoBehaviour
     public event Action<int> OnWaveStarted;
     public event Action<int> OnWaveCompleted;
     public event Action OnAllWavesCompleted;
+    public event Action<int,  int> OnWaveProgressChanged;
 
     private int currentWaveIndex = 0;
     private int enemiesAliveCount = 0;
@@ -77,7 +78,6 @@ public class WaveManager : MonoBehaviour
             if (wave.EnemyPrefab != null && !enemyPools.ContainsKey(wave.EnemyPrefab))
             {
                 // створюємо пул ждя кожного унікального префаба ворога
-                // батьківським обєктом робимо сам WaveManager, щоб ієрархія була чистою
                 var pool = new ObjectPool<EnemyController>(wave.EnemyPrefab, initialPoolSizePerType, transform);
                 enemyPools.Add(wave.EnemyPrefab, pool);
             }
@@ -111,6 +111,7 @@ public class WaveManager : MonoBehaviour
 
         Debug.Log($"Starting {currentWave.WaveName} with {currentWave.EnemyCount} enemies.");
         OnWaveStarted?.Invoke(currentWaveIndex + 1);
+        OnWaveProgressChanged?.Invoke(currentWaveIndex + 1, enemiesAliveCount);
 
         // спавнимо ворогів хвилі у фоновому фсинхронному потоці
         SpawnWaveEnemiesAsync(currentWave, token).Forget();
@@ -152,7 +153,7 @@ public class WaveManager : MonoBehaviour
         EnemyController enemy = enemyPools[enemyPrefab].Get();
 
         // ініціалізуємо ворога та передаємо йому посилання на повернення в пул, гравця та позицію спавну
-        enemy.Initialize(ReturnEnemyToPool, playerTransform,spawnPosition);
+        enemy.Initialize(ReturnEnemyToPool, playerTransform, spawnPosition);
     }
 
     private void ReturnEnemyToPool(EnemyController enemy)
@@ -165,6 +166,8 @@ public class WaveManager : MonoBehaviour
 
         enemiesAliveCount--;
         Debug.Log($"Enemy defeated. Remaining in wave: {enemiesAliveCount}");
+
+        OnWaveProgressChanged?.Invoke(currentWaveIndex + 1, enemiesAliveCount);
 
         if (enemiesAliveCount <= 0 && isWaveRunning)
         {
