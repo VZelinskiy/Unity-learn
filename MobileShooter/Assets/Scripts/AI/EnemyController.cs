@@ -3,6 +3,7 @@ using UnityEngine;
 
 [RequireComponent (typeof(CharacterController))]
 [RequireComponent(typeof(Health))]
+[RequireComponent(typeof(Animator))]
 public class EnemyController : MonoBehaviour
 {
     [Header("Movement settings")]
@@ -11,38 +12,63 @@ public class EnemyController : MonoBehaviour
 
     [Header("Combat Settings")]
     [SerializeField] private float damageToPlayer = 10;
-    [SerializeField] private float attackCooldown = 1;
+    //[SerializeField] private float attackCooldown = 1;
     [SerializeField] private float attackRange = 1.5f;
 
     //private float nextAttackTime;
-    private Transform playerTransform;
-    private CharacterController characterController;
-    private Health health;
+    public Transform PlayerTransform { get; private set; }
+    public CharacterController CharacterController { get; private set; }
+    public Health Health { get; private set; }
+    public Animator Animator { get; private set; }
+
+    public float MoveSpeed => moveSpeed;
+    public float RotationSpeed => rotationSpeed;
+    public float DamageToPlayer => damageToPlayer;
+    //public float AttackCooldown => attackCooldown;
+    public float AttackRange => attackRange;
+
     private Action<EnemyController> onReturnToPool;
-    
     private StateMachine stateMachine;
     private IState chaseState;
     private IState attackState;
+
+    private void Awake()
+    {
+        CharacterController = GetComponent<CharacterController>();
+        Health = GetComponent<Health>();
+        Animator = GetComponent<Animator>();
+        stateMachine = new StateMachine();
+    }
 
     // ініціалізація при отриманні з пулу
     public void Initialize(Action<EnemyController> returnAction, Transform player, Vector3 spawnPosition)
     {
         onReturnToPool = returnAction;
-        playerTransform = player;
+        PlayerTransform = player;
 
-        if (health != null)
+        if (Health != null)
         {
-            health.ResetHealth();
+            Health.ResetHealth();
         }
 
         // вимикаємо CharacterController перед телепортацією з пулу
-        characterController.enabled = false;
+        CharacterController.enabled = false;
         transform.position = spawnPosition;
-        characterController.enabled = true;
+        CharacterController.enabled = true;
+
+        // скидання аніматора
+        if (Animator  != null)
+        {
+            Animator.enabled = true;
+            Animator.ResetTrigger("Attack");
+            Animator.SetBool("IsDead", false);
+        }
 
         // ініціалізуємо стани
-        chaseState = new EnemyChaseState(this, playerTransform, characterController, moveSpeed , rotationSpeed, attackRange);
-        attackState = new EnemyAttackState(this, playerTransform, attackRange, damageToPlayer, attackCooldown);
+        //chaseState = new EnemyChaseState(this, PlayerTransform, CharacterController, moveSpeed , rotationSpeed, attackRange);
+        //attackState = new EnemyAttackState(this, PlayerTransform, attackRange, damageToPlayer, attackCooldown);
+        chaseState = new EnemyChaseState(this);
+        attackState = new EnemyAttackState(this);
 
         // плчинаємо з переслідування
         stateMachine.Initialize(chaseState);
@@ -56,13 +82,6 @@ public class EnemyController : MonoBehaviour
     public void SwitchToAttackState()
     {
         stateMachine.ChangeState(attackState);
-    }
-
-    private void Awake()
-    {
-        characterController = GetComponent<CharacterController>();
-        health = GetComponent<Health>();
-        stateMachine = new StateMachine();
     }
 
     //// Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -82,22 +101,21 @@ public class EnemyController : MonoBehaviour
 
     private void OnEnable()
     {
-        if(health  != null)
-        {
-            health.OnDie += HandleDeath;
-        }
+        if (Health  != null) Health.OnDie += HandleDeath;
     }
 
     private void OnDisable()
     {
-        if (health != null)
-        {
-            health.OnDie -= HandleDeath;
-        }
+        if (Health != null) Health.OnDie -= HandleDeath;
     }
 
     private void HandleDeath()
     {
+        if (Animator != null)
+        {
+            Animator.SetBool("IsDead", true);
+        }
+
         // замість деактивації напряму повертаємо в пул через делегат
         onReturnToPool?.Invoke(this);
     }

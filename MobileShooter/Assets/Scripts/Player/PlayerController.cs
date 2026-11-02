@@ -1,9 +1,8 @@
-using Cysharp.Threading.Tasks;
-using System.Threading;
 using UnityEngine;
 
 [RequireComponent (typeof(CharacterController))]
 [RequireComponent(typeof(Health))]
+[RequireComponent (typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
     [Header("References")]
@@ -20,6 +19,7 @@ public class PlayerController : MonoBehaviour
     //private int initialPoolSize = 15;
 
     private CharacterController characterController;
+    private Animator animator;
     //private ObjectPool<Projectile> bulletPool;
     private Vector2 moveInput;
     //private bool isFiring;
@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
 
         //// ініціалізуємо пул куль
         //if (bulletPrefab != null )
@@ -93,6 +94,8 @@ public class PlayerController : MonoBehaviour
             // переміщення через CharacterController
             characterController.Move(direction * (moveSpeed * Time.deltaTime));
         }
+
+        animator.SetFloat("Speed", moveInput.magnitude);
     }
 
     //// асинхронний цикл стрільби на UniTask замість важких корутин чи перевірок у Update

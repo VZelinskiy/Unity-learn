@@ -16,9 +16,12 @@ public class PlayerShooting : MonoBehaviour
     private ObjectPool<Projectile> bulletPool;
     private bool isFiring;
     private CancellationTokenSource firingCts;
+    private Animator animator;
 
     private void Awake()
     {
+        animator = GetComponent<Animator>();
+
         // ініціалізуємо пул куль
         if (bulletPrefab != null)
         {
@@ -51,6 +54,11 @@ public class PlayerShooting : MonoBehaviour
     private void OnFire(bool isFiring)
     {
         this.isFiring = isFiring;
+
+        if (animator != null)
+        {
+            animator.SetBool("IsFiring", isFiring);
+        }
     }
 
     // асинхронний цикл стрільби на UniTask замість важких корутин чи перевірок у Update
@@ -84,7 +92,9 @@ public class PlayerShooting : MonoBehaviour
         bullet.transform.rotation = transform.rotation;
 
         // ініціалізуємо кулю, передаючи їй метод повернення назад в пул
-        bullet.Initialize(ReturnBulletToPool, firePoint.forward);
+        bullet.Initialize(ReturnBulletToPool, transform.forward);
+
+        animator.SetTrigger("Shoot");
     }
 
     private void ReturnBulletToPool(Projectile bullet)
