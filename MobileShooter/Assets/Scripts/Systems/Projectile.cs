@@ -10,10 +10,18 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float lifeTime = 3;
     [SerializeField] private float damage = 25;
 
+    [SerializeField] private GameObject impactEffectPrefab;
+
+    private TrailRenderer trailRenderer;
     private Action<Projectile> onReturnToPool;
     private CancellationTokenSource cts;
     private Vector3 moveDirection;
     private bool hasHit;
+
+    private void Awake()
+    {
+        trailRenderer = GetComponent<TrailRenderer>();
+    }
 
     public void Initialize(Action<Projectile> returnAction, Vector3 direction)
     {
@@ -22,6 +30,11 @@ public class Projectile : MonoBehaviour
         hasHit = false;
 
         transform.SetParent(null);
+
+        if (trailRenderer != null)
+        {
+            trailRenderer.Clear();
+        }
     }
 
     private void OnEnable()
@@ -60,11 +73,6 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    private void ReturnSelf()
-    {
-        onReturnToPool?.Invoke(this);
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log("Bullet collide");
@@ -80,7 +88,25 @@ public class Projectile : MonoBehaviour
             damageable.TakeDamage(damage);
         }
 
+        // спавнимо ефект влучання у точці зіткнення
+        SpawnImpactEffect(other);
+
         // незалежно від того, влучили у ворога чи в перешкоду, повертаємо кулю в пул
         ReturnSelf();
+    }
+
+    private void SpawnImpactEffect(Collider other)
+    {
+        if (impactEffectPrefab != null)
+        {
+            Vector3 hitPoint = other.ClosestPoint(transform.position);
+            GameObject impact = Instantiate(impactEffectPrefab, hitPoint, Quaternion.identity);
+            Destroy(impact, 0.5f);
+        }
+    }
+
+    private void ReturnSelf()
+    {
+        onReturnToPool?.Invoke(this);
     }
 }

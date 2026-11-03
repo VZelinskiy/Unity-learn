@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Accessibility;
 
 [RequireComponent (typeof(CharacterController))]
 [RequireComponent(typeof(Health))]
@@ -32,6 +33,8 @@ public class EnemyController : MonoBehaviour
     private IState chaseState;
     private IState attackState;
 
+    private bool isDead;
+
     private void Awake()
     {
         CharacterController = GetComponent<CharacterController>();
@@ -45,13 +48,14 @@ public class EnemyController : MonoBehaviour
     {
         onReturnToPool = returnAction;
         PlayerTransform = player;
+        isDead = false;
 
         if (Health != null)
         {
             Health.ResetHealth();
         }
 
-        // вимикаємо CharacterController перед телепортацією з пулу
+        // вмикаємо назад CharacterController перед телепортацією з пулу
         CharacterController.enabled = false;
         transform.position = spawnPosition;
         CharacterController.enabled = true;
@@ -61,7 +65,7 @@ public class EnemyController : MonoBehaviour
         {
             Animator.enabled = true;
             Animator.ResetTrigger("Attack");
-            Animator.SetBool("IsDead", false);
+            Animator.ResetTrigger("Die");
         }
 
         // ініціалізуємо стани
@@ -76,12 +80,20 @@ public class EnemyController : MonoBehaviour
 
     public void SwitchToChaseState()
     {
+        if (isDead) return;
         stateMachine.ChangeState(chaseState);
     }
 
     public void SwitchToAttackState()
     {
+        if (isDead) return;
         stateMachine.ChangeState(attackState);
+    }
+
+    public void OnDeathAnimationFinished()
+    {
+        // замість деактивації напряму повертаємо в пул через делегат
+        onReturnToPool?.Invoke(this);
     }
 
     //// Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -101,7 +113,7 @@ public class EnemyController : MonoBehaviour
 
     private void OnEnable()
     {
-        if (Health  != null) Health.OnDie += HandleDeath;
+        if (Health != null) Health.OnDie += HandleDeath;
     }
 
     private void OnDisable()
@@ -111,13 +123,22 @@ public class EnemyController : MonoBehaviour
 
     private void HandleDeath()
     {
-        if (Animator != null)
+        if (isDead) return;
+        isDead = true;
+
+        // вимикаємо контролер руху, щоб труп не ковзав і не блокував гравця
+        if (CharacterController != null)
         {
-            Animator.SetBool("IsDead", true);
+            CharacterController.enabled = false;
         }
 
-        // замість деактивації напряму повертаємо в пул через делегат
-        onReturnToPool?.Invoke(this);
+        if (Animator != null)
+        {
+            Animator.SetTrigger("Die");
+        }
+
+        //// замість деактивації напряму повертаємо в пул через делегат
+        //onReturnToPool?.Invoke(this);
     }
 
     // Update is called once per frame
@@ -126,7 +147,7 @@ public class EnemyController : MonoBehaviour
         //if (playerTransform == null) return;
 
         //MoveAndRotateTowardsPlayer();
-
+        if (isDead) return;
         stateMachine.Update();
     }
 

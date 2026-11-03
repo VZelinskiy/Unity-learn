@@ -1,9 +1,13 @@
 using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.CompilerServices;
+using System;
 using System.Threading;
 using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
 {
+    private const float lightDuration = 0.05f;
+
     [Header("References")]
     [SerializeField] private InputReader inputReader;
     [SerializeField] private Projectile bulletPrefab;
@@ -17,10 +21,23 @@ public class PlayerShooting : MonoBehaviour
     private bool isFiring;
     private CancellationTokenSource firingCts;
     private Animator animator;
+    private ParticleSystem muzzleFlashParticles;
+    private Light muzzleLight;
+    private CancellationTokenSource flashCts;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+
+        // отримуємо посилання на ефекти з FirePoint, якщо вони є
+
+        if (firePoint != null)
+        {
+            muzzleFlashParticles = firePoint.GetComponentInChildren<ParticleSystem>();
+            muzzleLight = firePoint.GetComponentInChildren<Light>();
+
+            if (muzzleLight != null) muzzleLight.enabled = false;
+        }
 
         // ініціалізуємо пул куль
         if (bulletPrefab != null)
@@ -84,6 +101,24 @@ public class PlayerShooting : MonoBehaviour
     {
         if (bulletPool == null || firePoint == null) return;
 
+        // активуємо візуальні ефекти на дулі
+        if (muzzleLight != null)
+        {
+            muzzleFlashParticles.Play();
+        }
+
+        if (muzzleLight != null)
+        {
+            muzzleLight.enabled = true;
+
+            // скасовуємо попередній таймер вимкнення світла, якщо він іще ішов
+            flashCts?.Cancel();
+            flashCts = new CancellationTokenSource();
+
+            // запускаємо новий асинхронний таймер вимкнення світла
+            TurnOffLightAfterDelay(flashCts.Token).Forget();
+        }
+
         // дістаємо кулю з пулу
         Projectile bullet = bulletPool.Get();
 
@@ -93,8 +128,24 @@ public class PlayerShooting : MonoBehaviour
 
         // ініціалізуємо кулю, передаючи їй метод повернення назад в пул
         bullet.Initialize(ReturnBulletToPool, transform.forward);
+    }
 
-        animator.SetTrigger("Shoot");
+    private async UniTaskVoid TurnOffLightAfterDelay(CancellationToken token)
+    {
+        try
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(lightDuration), cancellationToken: token);
+
+            if (muzzleLight != null)
+            {
+                muzzleLight.enabled = false;
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            // це нормально: якщо відбувся новий постріл до того, як минув lightDuration
+            // попередній таймер скасовується без помилокб а світло залишається увімкненим для наступнргр пострілу
+        }
     }
 
     private void ReturnBulletToPool(Projectile bullet)
