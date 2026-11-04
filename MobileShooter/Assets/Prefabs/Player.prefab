@@ -2855,7 +2855,7 @@ CharacterController:
   m_Height: 2
   m_Radius: 0.5
   m_SlopeLimit: 45
-  m_StepOffset: 0.1
+  m_StepOffset: 0.06
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
@@ -3079,15 +3079,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1914406845584122888, guid: 95cd12a73fb2a234a998f76d0f6d4ca1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.00083
+      value: 0.00032
       objectReference: {fileID: 0}
     - target: {fileID: 1914406845584122888, guid: 95cd12a73fb2a234a998f76d0f6d4ca1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.00142
+      value: 0.00095
       objectReference: {fileID: 0}
     - target: {fileID: 1914406845584122888, guid: 95cd12a73fb2a234a998f76d0f6d4ca1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.0014
+      value: -0.00012
       objectReference: {fileID: 0}
     - target: {fileID: 1914406845584122888, guid: 95cd12a73fb2a234a998f76d0f6d4ca1, type: 3}
       propertyPath: m_LocalRotation.w

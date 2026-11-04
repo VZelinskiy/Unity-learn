@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.Accessibility;
 
 [RequireComponent (typeof(CharacterController))]
 [RequireComponent(typeof(Health))]

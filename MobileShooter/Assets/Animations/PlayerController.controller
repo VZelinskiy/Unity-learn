@@ -33,7 +33,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Firing Rifle
-  m_Speed: 1
+  m_Speed: 3.03
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -1678739104854775488}
@@ -61,7 +61,7 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: d7335630bc89f774ea66471d869a63a2, type: 3}
+    m_Motion: {fileID: -203655887218126122, guid: 6c0bf825b00e88b498afc2b6629ec0e3, type: 3}
     m_Threshold: 0.1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -235,7 +235,7 @@ AnimatorController:
     m_Mask: {fileID: 31900000, guid: a648941917673614fb345ac36a00e115, type: 2}
     m_Motions: []
     m_Behaviours: []
-    m_BlendingMode: 0
+    m_BlendingMode: 1
     m_SyncedLayerIndex: -1
     m_DefaultWeight: 1
     m_IKPass: 0
@@ -335,14 +335,14 @@ AnimatorState:
   - {fileID: -1299403701449042511}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
+  m_IKOnFeet: 1
   m_WriteDefaultValues: 1
   m_Mirror: 0
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: fac0f58d29c258e4ebf998d5f49461f4, type: 3}
+  m_Motion: {fileID: -203655887218126122, guid: 4c4a2e1ca45e8e04cb56cef74beac4b0, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
