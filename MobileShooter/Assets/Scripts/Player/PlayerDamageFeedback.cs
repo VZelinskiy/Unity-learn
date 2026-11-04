@@ -29,7 +29,7 @@ public class PlayerDamageFeedback : MonoBehaviour
     {
         if (cameraTransform != null)
         {
-            initialCameraLocalPos = cameraTransform.localPosition;
+            initialCameraLocalPos = Vector3.zero;
         }
     }
 
