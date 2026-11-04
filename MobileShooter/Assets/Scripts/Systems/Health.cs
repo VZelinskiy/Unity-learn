@@ -7,6 +7,7 @@ public class Health : MonoBehaviour, IDamageable
     private float currentHealth;
 
     public event Action<float, float> OnHealthChanged;
+    public event Action OnTakeDamage;
     public event Action OnDie;
 
     public float CurrentHealth => currentHealth;
@@ -25,6 +26,7 @@ public class Health : MonoBehaviour, IDamageable
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
         NotifyHealthChanged();
+        OnTakeDamage?.Invoke();
         //OnHealthChanged?.Invoke(currentHealth);
         Debug.Log($"{gameObject.name} took {amount} damage. Current health: {currentHealth}");
 

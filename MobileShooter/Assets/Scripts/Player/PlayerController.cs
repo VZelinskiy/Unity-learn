@@ -14,6 +14,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed = 5;
     [SerializeField] private float rotationSpeed = 10;
 
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip[] footstepsClips;
+
     //[Header("Combat Settings")]
     //private float fireInterval = 0.2f;
     //private int initialPoolSize = 15;
@@ -96,6 +100,16 @@ public class PlayerController : MonoBehaviour
         }
 
         animator.SetFloat("Speed", moveInput.magnitude);
+    }
+
+    // Цей метод викликається через Animation Event із файлу анімації бігу/ходьби гравця
+    public void PlayFootsteps()
+    {
+        if (audioSource == null || footstepsClips == null || footstepsClips.Length == 0) return;
+
+        // вибираємо випадковий звук із масиву
+        AudioClip clip = footstepsClips[Random.Range(0, footstepsClips.Length)];
+        audioSource.PlayOneShot(clip, 0.5f);
     }
 
     //// асинхронний цикл стрільби на UniTask замість важких корутин чи перевірок у Update

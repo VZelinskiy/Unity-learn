@@ -90,6 +90,7 @@ public class EnemyController : MonoBehaviour
         stateMachine.ChangeState(attackState);
     }
 
+    // Цей метод викликається через Animation Event із файлу анімації смерті ворога
     public void OnDeathAnimationFinished()
     {
         // замість деактивації напряму повертаємо в пул через делегат

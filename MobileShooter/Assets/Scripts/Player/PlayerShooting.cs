@@ -17,6 +17,10 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private float fireInterval = 0.2f;
     [SerializeField] private int initialPoolSize = 15;
 
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip shootClip;
+
     private ObjectPool<Projectile> bulletPool;
     private bool isFiring;
     private CancellationTokenSource firingCts;
@@ -100,6 +104,12 @@ public class PlayerShooting : MonoBehaviour
     private void Shoot()
     {
         if (bulletPool == null || firePoint == null) return;
+
+        // відтворення звуку пострілу
+        if (audioSource != null && shootClip != null)
+        {
+            audioSource.PlayOneShot(shootClip);
+        }
 
         // активуємо візуальні ефекти на дулі
         if (muzzleLight != null)
