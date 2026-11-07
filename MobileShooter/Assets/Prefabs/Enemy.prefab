@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8637041796485955144}
   - component: {fileID: 7267331653121563000}
   - component: {fileID: 7057451224466466167}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 2609725927125590023}
   - component: {fileID: 5541330152463203608}
   - component: {fileID: 21028485408645085}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,7 +159,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1641128605120539127}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 6229779394188642691}
   - component: {fileID: 8607681474936414635}
   - component: {fileID: 6897092504742861555}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -270,7 +270,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3086472126992086075}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Handle Slide Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -306,7 +306,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8906046339175823923}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -340,7 +340,7 @@ GameObject:
   - component: {fileID: 3425854272486954243}
   - component: {fileID: 6770153074546995775}
   - component: {fileID: 917089939536058921}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -447,7 +447,7 @@ GameObject:
   - component: {fileID: 3327107482845938952}
   - component: {fileID: 8512774394179866211}
   - component: {fileID: 7043406765269414017}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -591,7 +591,6 @@ MonoBehaviour:
   moveSpeed: 2
   rotationSpeed: 5
   damageToPlayer: 10
-  attackCooldown: 1
   attackRange: 1.5
 --- !u!114 &8512774394179866211
 MonoBehaviour:
@@ -639,7 +638,7 @@ GameObject:
   - component: {fileID: 4912494215185430693}
   - component: {fileID: 789360561574727317}
   - component: {fileID: 567100139638995643}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
