@@ -157,19 +157,17 @@ public class WaveManager : MonoBehaviour
             spawnPosition = playerTransform.position + new Vector3(randomCircle.x, 0, randomCircle.y);
         }
 
+        var pool = enemyPools[enemyPrefab];
         EnemyController enemy = enemyPools[enemyPrefab].Get();
 
-        // ініціалізуємо ворога та передаємо йому посилання на повернення в пул, гравця та позицію спавну
-        enemy.Initialize(ReturnEnemyToPool, playerTransform, spawnPosition);
+        // ініціалізуємо ворога та передаємо йому посилання на повернення в його пул, гравця та позицію спавну
+        enemy.Initialize(returnedEnemy => ReturnEnemyToPool(returnedEnemy, pool), playerTransform, spawnPosition);
     }
 
-    private void ReturnEnemyToPool(EnemyController enemy)
+    private void ReturnEnemyToPool(EnemyController enemy, ObjectPool<EnemyController> targetPool)
     {
-        foreach (var pair in enemyPools)
-        {
-            pair.Value.ReturnToPool(enemy);
-            break;
-        }
+        // Повертаємо ворога чітко в його рідний пул
+        targetPool.ReturnToPool(enemy);
 
         enemiesAliveCount--;
         Debug.Log($"Enemy defeated. Remaining in wave: {enemiesAliveCount}");

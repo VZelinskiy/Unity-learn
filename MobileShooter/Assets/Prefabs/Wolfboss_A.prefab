@@ -273,6 +273,7 @@ GameObject:
   - component: {fileID: 8986558972901763750}
   - component: {fileID: 7642273056047672601}
   - component: {fileID: 6297111552646445127}
+  - component: {fileID: 7130619116317808390}
   m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
@@ -364,6 +365,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &7130619116317808390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6355844537508110397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 472a1b3a360f99445aadf8e2ece8faa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BillboardUI
 --- !u!1 &7681874657095107171
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,7 +477,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7681874657095107171}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2cbdf3ce32c9f44abe8d56053912935, type: 3}
+  m_Script: {fileID: 11500000, guid: 01926579ad08d7347aff1f00478938f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HaelthBarUI
   health: {fileID: 5823662341042421775}
@@ -901,7 +914,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 819737a3bc9e83e4b84ac07ec02c5137, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -962,10 +975,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4da76972a8607a47af9c7fd6b8f3b88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  moveSpeed: 4
+  moveSpeed: 7
   rotationSpeed: 10
   damageToPlayer: 10
   attackRange: 2.5
+  attackDuration: 1.73
 --- !u!65 &1544008433359403037
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -985,5 +999,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.29, y: 7.03, z: 5.35}
+  m_Size: {x: 2.5, y: 7.03, z: 5.35}
   m_Center: {x: 0, y: 3.6, z: 1.29}

@@ -1,7 +1,5 @@
 using System;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour

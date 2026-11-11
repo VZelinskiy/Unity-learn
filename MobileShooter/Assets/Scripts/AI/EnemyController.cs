@@ -14,6 +14,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float damageToPlayer = 10;
     //[SerializeField] private float attackCooldown = 1;
     [SerializeField] private float attackRange = 1.5f;
+    [SerializeField] private float attackDuration = 1.0f;
 
     //private float nextAttackTime;
     public Transform PlayerTransform { get; private set; }
@@ -26,6 +27,7 @@ public class EnemyController : MonoBehaviour
     public float DamageToPlayer => damageToPlayer;
     //public float AttackCooldown => attackCooldown;
     public float AttackRange => attackRange;
+    public float AttackDuration => attackDuration;
 
     private Action<EnemyController> onReturnToPool;
     private StateMachine stateMachine;
@@ -94,6 +96,16 @@ public class EnemyController : MonoBehaviour
     {
         // замість деактивації напряму повертаємо в пул через делегат
         onReturnToPool?.Invoke(this);
+    }
+
+    // цей метод викликається через Animation Event із анімації ворога
+    public void AnimationHitEvent()
+    {
+        // перевіряємо, чи потоочний стан вміє приймати анімаційні події
+        if (stateMachine.CurrentState is IAnimationEventReceiver eventReceiver)
+        {
+            eventReceiver.OnAnimationEvent();
+        }
     }
 
     //// Start is called once before the first execution of Update after the MonoBehaviour is created

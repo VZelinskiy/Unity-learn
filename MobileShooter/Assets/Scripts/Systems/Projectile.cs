@@ -75,24 +75,52 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("Bullet collide");
-        if (hasHit) return;
+        ////Debug.Log("Bullet collide");
+        //if (hasHit) return;
 
-        // перевіряємо, чи обєкт, у який влучили, має компонент здоровя (реалізує IDamageable)
-        // також переконуємося, що куля не влучає в самого гравця (якщо у гравця є свій колайдер)
-        if (other.CompareTag("Player")) return;
+        //// перевіряємо, чи обєкт, у який влучили, має компонент здоровя (реалізує IDamageable)
+        //// також переконуємося, що куля не влучає в самого гравця (якщо у гравця є свій колайдер)
+        //if (other.CompareTag("Player")) return;
 
-        if (other.TryGetComponent<IDamageable>(out var damageable))
-        {
-            hasHit = true;
-            damageable.TakeDamage(damage);
-        }
+        //if (other.TryGetComponent<IDamageable>(out var damageable))
+        //{
+        //    hasHit = true;
+        //    damageable.TakeDamage(damage);
+        //}
+        DealDamage(other);
 
         // спавнимо ефект влучання у точці зіткнення
         SpawnImpactEffect(other);
 
         // незалежно від того, влучили у ворога чи в перешкоду, повертаємо кулю в пул
         ReturnSelf();
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        DealDamage(other);
+
+        // спавнимо ефект влучання у точці зіткнення
+        SpawnImpactEffect(other);
+
+        // незалежно від того, влучили у ворога чи в перешкоду, повертаємо кулю в пул
+        ReturnSelf();
+    }
+
+    private void DealDamage(Collider collider)
+    {
+        //Debug.Log("Bullet collide");
+        if (hasHit) return;
+
+        // перевіряємо, чи обєкт, у який влучили, має компонент здоровя (реалізує IDamageable)
+        // також переконуємося, що куля не влучає в самого гравця (якщо у гравця є свій колайдер)
+        if (collider.CompareTag("Player")) return;
+
+        if (collider.TryGetComponent<IDamageable>(out var damageable))
+        {
+            hasHit = true;
+            damageable.TakeDamage(damage);
+        }
     }
 
     private void SpawnImpactEffect(Collider other)

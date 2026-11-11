@@ -23,7 +23,10 @@ public class InputReader : ScriptableObject, InputSystem_Actions.IPlayerActions
 
     private void OnDisable()
     {
-        gameInput.Player.Disable();
+        if (gameInput != null)
+        {
+            gameInput.Player.Disable();
+        }
     }
 
     public void EnableInput()
