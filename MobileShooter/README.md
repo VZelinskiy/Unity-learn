@@ -54,3 +54,30 @@ Assets/
 │   └── AI/            # Enemy behaviors and wave management
 ├── Prefabs/           # Reusable game objects
 └── Settings/          # URP and Renderer pipeline assets
+```
+
+## 📦 Getting Started
+
+To get a local copy up and running, follow these steps:
+
+### Prerequisites
+* Unity 6.6 (or newer)
+* Universal Render Pipeline (URP)
+
+### Installation & Run
+
+**1. Clone the repository:**
+```bash
+git clone https://github.com/your-username/your-repo-name.git
+```
+2. Open the project:
+Open the project folder in Unity 6.6 (or newer).
+
+3. Load the scene:
+Load the main scene located in Assets/Scenes/.
+
+4. Run:
+Press Play in the editor or build for your target platform (WebGL / Android).
+
+📄 License
+Distributed under the MIT License. See LICENSE for more information.
