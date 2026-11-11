@@ -70,14 +70,14 @@ To get a local copy up and running, follow these steps:
 ```bash
 git clone https://github.com/your-username/your-repo-name.git
 ```
-2. Open the project:
+**2. Open the project:**
 Open the project folder in Unity 6.6 (or newer).
 
-3. Load the scene:
+**3. Load the scene:**
 Load the main scene located in Assets/Scenes/.
 
-4. Run:
+**4. Run:**
 Press Play in the editor or build for your target platform (WebGL / Android).
 
-📄 License
-Distributed under the MIT License. See LICENSE for more information.
+## 📄 License
+Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
