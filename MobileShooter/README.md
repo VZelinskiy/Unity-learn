@@ -79,5 +79,16 @@ Load the main scene located in Assets/Scenes/.
 **4. Run:**
 Press Play in the editor or build for your target platform (WebGL / Android).
 
+## 🕹️ Controls
+
+The game adapts its control scheme depending on the target platform:
+
+*   **WebGL / Desktop:**
+    *   **Movement:** `W`, `A`, `S`, `D` keys
+    *   **Shoot:** `Spacebar`
+*   **Mobile (Android):**
+    *   **Movement:** Left virtual joystick
+    *   **Shoot:** Right virtual joystick / Action button
+
 ## 📄 License
 Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
