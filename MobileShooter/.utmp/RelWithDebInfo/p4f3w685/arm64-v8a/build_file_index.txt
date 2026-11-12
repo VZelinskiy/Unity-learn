@@ -1,2 +1,0 @@
-D:\Repositories\Unity-learn\MobileShooter\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\CMakeLists.txt
-D:\Repositories\Unity-learn\MobileShooter\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\GameActivity\CMakeLists.txt
